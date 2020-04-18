@@ -14,6 +14,14 @@ namespace MP01
 
         public Gauge Gauge { get; set; }
 
+        public EndpointDevice(int identifier, DateTime dateOfProduction, string model, Gauge gauge) : base()
+        {
+            Identifier = identifier;
+            DateOfProduction = dateOfProduction;
+            Model = model;
+            Gauge = gauge;
+        }
+
         public void PerformAction(Action action)
         {
             throw new NotImplementedException();

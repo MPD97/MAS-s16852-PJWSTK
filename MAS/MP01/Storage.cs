@@ -4,8 +4,11 @@ namespace MP01
 {
     public class Storage : ObjectPlus
     {
+        public Storage() :base()
+        {
 
-        public ulong FreeRamSpace { get { return RAMSize - TakenRamSpace; } }    // Atrybut pochodny.
+        }
+        public ulong FreeRamSpace { get { return RAMSize - TakenRamSpace; } }                               // Atrybut pochodny.
         private ulong _takenRAMSpace;
         public ulong TakenRamSpace
         {
@@ -24,7 +27,7 @@ namespace MP01
         }
         public ulong RAMSize { get; set; }
 
-        public ulong FreeDiskSpace { get { return DiskSize - TakenDiskSpace; } } // Atrybut pochodny.  
+        public ulong FreeDiskSpace { get { return DiskSize - TakenDiskSpace; } }                            // Atrybut pochodny.  
 
         private ulong _takenDiskSpace;
         public ulong TakenDiskSpace
@@ -44,7 +47,7 @@ namespace MP01
         }
         public ulong DiskSize { get; set; }
 
-        public string MemoryState                                               // Atrybut złożony
+        public string MemoryState                                                                           // Atrybut złożony
         {
             get
             {

@@ -9,6 +9,12 @@ namespace MP01
         public string Version { get; set; }
         public string Type { get; set; }
 
+        public OperatingSystem(string version, string type) : base()
+        {
+            Version = version;
+            Type = type;
+        }
+
         public void Update()                                // Metoda
         {
 

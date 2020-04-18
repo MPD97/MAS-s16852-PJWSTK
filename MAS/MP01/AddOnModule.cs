@@ -2,6 +2,9 @@
 {
     public abstract class AddOnModule : ObjectPlus
     {
+        public AddOnModule() : base()
+        {
 
+        }
     }
 } 

@@ -9,5 +9,10 @@ namespace MP01
         public string Model { get; set; }
         public string Manufacturer { get; set; }
 
+        public PersonalTransportDevice(string model, string manufacturer) : base()
+        {
+            Model = model;
+            Manufacturer = manufacturer;
+        }
     }
 }

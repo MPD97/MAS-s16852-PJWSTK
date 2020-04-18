@@ -2,6 +2,9 @@
 {
     public class Client : ObjectPlus
     {
+        public Client() : base()
+        {
 
+        }
     }
 } 

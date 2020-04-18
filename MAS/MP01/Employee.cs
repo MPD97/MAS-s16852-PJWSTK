@@ -2,6 +2,9 @@
 {
     public class Employee : ObjectPlus
     {
+        public Employee() : base()
+        {
 
+        }
     }
 } 

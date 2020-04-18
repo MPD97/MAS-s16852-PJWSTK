@@ -2,6 +2,9 @@
 {
     public class License : ObjectPlus
     {
+        public License() :base()
+        {
 
+        }
     }
 } 

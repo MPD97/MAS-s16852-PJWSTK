@@ -2,6 +2,9 @@
 {
     public class Storekeeper : Employee
     {
+        public Storekeeper() : base()
+        {
 
+        }
     }
 } 

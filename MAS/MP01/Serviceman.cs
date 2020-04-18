@@ -2,6 +2,10 @@
 {
     public class Serviceman : Employee
     {
+        public Serviceman() : base()
+        {
+
+        }
 
     }
-} 
+}
