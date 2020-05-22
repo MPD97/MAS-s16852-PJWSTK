@@ -1,8 +1,9 @@
-﻿using System;
+﻿using MP02.Functional;
+using System;
 
 namespace MP02
 {
-    public class Storage : ObjectPlus
+    public class Storage : ObjectPlusPlus
     {
         public Storage() :base()
         {

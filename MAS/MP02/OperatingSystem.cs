@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using MP02.Functional;
 
 namespace MP02
 {
-    public class OperatingSystem : ObjectPlus
+    public class OperatingSystem : ObjectPlusPlus
     {
         public string Version { get; set; }
         public string Type { get; set; }

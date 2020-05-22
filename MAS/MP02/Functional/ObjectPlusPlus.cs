@@ -6,7 +6,7 @@ using System.Text;
 
 namespace MP02.Functional
 {
-    public class ObjectPlusPlus
+    public class ObjectPlusPlus : ObjectPlus
     {
         private Dictionary<IAsocjacja, Dictionary<object, ObjectPlusPlus>> links = new Dictionary<IAsocjacja, Dictionary<object, ObjectPlusPlus>>();
         private static HashSet<ObjectPlusPlus> allParts = new HashSet<ObjectPlusPlus>();
@@ -73,8 +73,6 @@ namespace MP02.Functional
             addLink(roleName, partObject);
             allParts.Add(partObject);
         }
-
-
 
         public ObjectPlusPlus[] getLinks(IAsocjacja roleName)
         {

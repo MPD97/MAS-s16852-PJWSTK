@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using MP02.Functional;
 
 namespace MP02
 {
-    public class PersonalTransportDevice : ObjectPlus
+    public class PersonalTransportDevice : ObjectPlusPlus
     {
         public string Model { get; set; }
         public string Manufacturer { get; set; }

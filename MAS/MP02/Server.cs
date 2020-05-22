@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using MP02.Functional;
 
 namespace MP02
 {
-    public class Server : ObjectPlus
+    public class Server : ObjectPlusPlus
     {
         public string ProcessorModel { get; set; }
         public string ProcessorManufacturer { get; set; }

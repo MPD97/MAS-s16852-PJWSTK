@@ -1,8 +1,8 @@
-﻿using System;
+﻿using MP02.Functional;
 
 namespace MP02
 {
-    public class StorageProcess : ObjectPlus
+    public class StorageProcess : ObjectPlusPlus
     {
         public StorageProcess() : base()
         {

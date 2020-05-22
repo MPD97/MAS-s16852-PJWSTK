@@ -1,10 +1,10 @@
-﻿using System;
-using System.ComponentModel;
-using System.Text;
+﻿using MP02.Functional;
+using System;
+
 
 namespace MP02
 {
-    public class Warehouse : ObjectPlus
+    public class Warehouse : ObjectPlusPlus
     {
         public string Address { get; set; }
         public int AreaInSquareMeters { get; set; }
