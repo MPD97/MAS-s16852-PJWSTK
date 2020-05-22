@@ -12,8 +12,8 @@ namespace MP02.Functional
         private R class2;
         private Association<R, T> opposite;
         int maxCardinalityClass;
-
-        private static HashSet<Association<T, R>> associationSet = new HashSet<Association<T, R>>();
+        
+        private static HashSet<Association<ObjectPlusPlus, ObjectPlusPlus>> associationSet = new HashSet<Association<ObjectPlusPlus, ObjectPlusPlus>>();
 
         private Association(T class1, R class2, int maxCardinalityClass, string name)
         {
@@ -21,7 +21,6 @@ namespace MP02.Functional
             this.class1 = class1;
             this.class2 = class2;
             this.maxCardinalityClass = maxCardinalityClass;
-
         }
 
         public static bool createAssociation<X, Y>(X class1, Y class2, int maxCardinalityClass1, int maxCardinalityClass2) where X : ObjectPlusPlus where Y : ObjectPlusPlus
@@ -35,7 +34,7 @@ namespace MP02.Functional
 
             { return false; }
 
-            Association<X, Y> o = new Association<X, Y>(class1, class2, maxCardinalityClass2, null);
+            Association<X ,Y> o = new Association<X, Y>(class1, class2, maxCardinalityClass2, null);
             o.opposite = new Association<Y, X>(class2, class1, maxCardinalityClass1, null);
             o.opposite.opposite = o;
             associationSet.Add(o);
