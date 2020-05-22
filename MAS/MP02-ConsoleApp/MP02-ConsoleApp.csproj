@@ -6,4 +6,8 @@
     <RootNamespace>MP02_ConsoleApp</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MP02\MP02.csproj" />
+  </ItemGroup>
+
 </Project>

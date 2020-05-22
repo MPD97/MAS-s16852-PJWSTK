@@ -1,6 +1,7 @@
 ﻿using MP02;
 using MP02.Functional;
 using System;
+using System.IO;
 
 namespace MP02_ConsoleApp
 {
@@ -8,6 +9,11 @@ namespace MP02_ConsoleApp
     {
         static void Main(string[] args)
         {
+            var sw = new StreamWriter(Console.OpenStandardOutput());
+            sw.AutoFlush = true;
+            Console.SetOut(sw);
+
+
             Warehouse warehouse1 = new Warehouse("Orchidei 14A, 96-321 Słubica B", 350);
             Warehouse warehouse2 = new Warehouse("Samorządowa 26, 26-600 Radom", 221);
             Warehouse warehouse3 = new Warehouse("Południowa 4c, 26-613 Jedlnia-Letnisko", 445);
@@ -19,6 +25,7 @@ namespace MP02_ConsoleApp
             ObjectPlus.ShowExtent<Warehouse>();
             ObjectPlus.ShowExtent<Server>();
 
+            //warehouse1.showLinks(, sw);
 
             Console.ReadLine();
         }

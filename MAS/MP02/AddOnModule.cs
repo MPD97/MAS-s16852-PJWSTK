@@ -1,6 +1,8 @@
-﻿namespace MP02
+﻿using MP02.Functional;
+
+namespace MP02
 {
-    public abstract class AddOnModule : ObjectPlus
+    public abstract class AddOnModule : ObjectPlusPlus
     {
         public AddOnModule() : base()
         {

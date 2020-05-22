@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using MP02.Functional;
 
 namespace MP02
 {
-    public class Functions : ObjectPlus
+    public class Functions : ObjectPlusPlus
     {
         public string[] AvailableFunctions { get; set; }        // Atrybut powtarzalny [0..*]
 

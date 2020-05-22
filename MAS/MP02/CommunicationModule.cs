@@ -1,6 +1,8 @@
-﻿namespace MP02
+﻿using MP02.Functional;
+
+namespace MP02
 {
-    public class CommunicationModule : ObjectPlus
+    public class CommunicationModule : ObjectPlusPlus
     {
         public int Frequency { get; set; }
         public string IMEI { get; set; }

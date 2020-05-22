@@ -8,7 +8,7 @@ namespace MP02.Functional
 {
     public class ObjectPlusPlus : ObjectPlus
     {
-        private Dictionary<IAsocjacja, Dictionary<object, ObjectPlusPlus>> links = new Dictionary<IAsocjacja, Dictionary<object, ObjectPlusPlus>>();
+        private Dictionary<IAssociation, Dictionary<object, ObjectPlusPlus>> links = new Dictionary<IAssociation, Dictionary<object, ObjectPlusPlus>>();
         private static HashSet<ObjectPlusPlus> allParts = new HashSet<ObjectPlusPlus>();
 
         public ObjectPlusPlus() : base()
@@ -16,7 +16,7 @@ namespace MP02.Functional
 
         }
 
-        private void addLink(IAsocjacja roleName, ObjectPlusPlus targetObject, object qualifier, int counter)
+        private void addLink(IAssociation roleName, ObjectPlusPlus targetObject, object qualifier, int counter)
         {
             Dictionary<object, ObjectPlusPlus> objectLinks;
             if (!roleName.verifyInstance(this, targetObject)) throw new Exception("obiekty nie pasuja do danej asocjacji");
@@ -53,17 +53,17 @@ namespace MP02.Functional
             }
         }
 
-        public void addLink(IAsocjacja roleName, ObjectPlusPlus targetObject, object qualifier)
+        public void addLink(IAssociation roleName, ObjectPlusPlus targetObject, object qualifier)
         {
             addLink(roleName, targetObject, qualifier, 2);
         }
 
-        public void addLink(IAsocjacja roleName, ObjectPlusPlus targetObject)
+        public void addLink(IAssociation roleName, ObjectPlusPlus targetObject)
         {
             addLink(roleName, targetObject, targetObject);
         }
 
-        public void addPart(IAsocjacja roleName, ObjectPlusPlus partObject)
+        public void addPart(IAssociation roleName, ObjectPlusPlus partObject)
         {
             if (allParts.Contains(partObject))
             {
@@ -74,7 +74,7 @@ namespace MP02.Functional
             allParts.Add(partObject);
         }
 
-        public ObjectPlusPlus[] getLinks(IAsocjacja roleName)
+        public ObjectPlusPlus[] getLinks(IAssociation roleName)
         {
             Dictionary<object, ObjectPlusPlus> objectLinks;
 
@@ -89,7 +89,7 @@ namespace MP02.Functional
 
 
 
-        public void showLinks(IAsocjacja roleName, StreamWriter stream)
+        public void showLinks(IAssociation roleName, StreamWriter stream)
         {
             Dictionary<object, ObjectPlusPlus> objectLinks;
 
@@ -112,7 +112,7 @@ namespace MP02.Functional
 
 
 
-        public ObjectPlusPlus getLinkedObject(IAsocjacja roleName, object qualifier)
+        public ObjectPlusPlus getLinkedObject(IAssociation roleName, object qualifier)
         {
             Dictionary<object, ObjectPlusPlus> objectLinks;
 
@@ -132,12 +132,12 @@ namespace MP02.Functional
 
 
 
-        public bool containsRole(IAsocjacja roleName)
+        public bool containsRole(IAssociation roleName)
         {
             return links.ContainsKey(roleName);
         }
 
-        public int roleSize(IAsocjacja roleName)
+        public int roleSize(IAssociation roleName)
         {
             if (!containsRole(roleName)) throw new Exception("Can't get size, No links for the role: " + roleName);
             return links[roleName].Count;
@@ -145,7 +145,7 @@ namespace MP02.Functional
 
 
 
-        private void removeLink(IAsocjacja roleName, ObjectPlusPlus targetObject, object qualifier, int counter)
+        private void removeLink(IAssociation roleName, ObjectPlusPlus targetObject, object qualifier, int counter)
         {
             if (counter < 1) return;
             Dictionary<object, ObjectPlusPlus> objectLinks;
@@ -167,17 +167,17 @@ namespace MP02.Functional
 
 
 
-        public void removeLink(IAsocjacja roleName, ObjectPlusPlus targetObject, object qualifier)
+        public void removeLink(IAssociation roleName, ObjectPlusPlus targetObject, object qualifier)
         {
             removeLink(roleName, targetObject, qualifier, 2);
         }
 
-        public void removeLink(IAsocjacja roleName, ObjectPlusPlus targetObject)
+        public void removeLink(IAssociation roleName, ObjectPlusPlus targetObject)
         {
             removeLink(roleName, targetObject, targetObject, 2);
         }
 
-        public void removePart(IAsocjacja roleName, ObjectPlusPlus targetObject)
+        public void removePart(IAssociation roleName, ObjectPlusPlus targetObject)
         {
             targetObject.removeObject();
             allParts.Remove(targetObject);

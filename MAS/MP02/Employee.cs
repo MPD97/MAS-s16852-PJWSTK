@@ -1,6 +1,8 @@
-﻿namespace MP02
+﻿using MP02.Functional;
+
+namespace MP02
 {
-    public class Employee : ObjectPlus
+    public class Employee : ObjectPlusPlus
     {
         public Employee() : base()
         {
