@@ -9,9 +9,9 @@ namespace MP02_ConsoleApp
     {
         static void Main(string[] args)
         {
-            var sw = new StreamWriter(Console.OpenStandardOutput());
-            sw.AutoFlush = true;
-            Console.SetOut(sw);
+            //var sw = new StreamWriter(Console.OpenStandardOutput());
+            //sw.AutoFlush = true;
+            //Console.SetOut(sw);
 
 
             Warehouse warehouse1 = new Warehouse("Orchidei 14A, 96-321 Słubica B", 350);
@@ -22,10 +22,14 @@ namespace MP02_ConsoleApp
             Server server1 = new Server("Core I7", "Intel", new Storage(3000000000, 50000000000, 1700000000, 1300000000));
             Server server2 = new Server("Core I3", "Intel", new Storage(15000000000, 440000000000, 2888741908, 444440000));
 
-            ObjectPlus.ShowExtent<Warehouse>();
-            ObjectPlus.ShowExtent<Server>();
+            //ObjectPlus.ShowExtent<Warehouse>();
+            //ObjectPlus.ShowExtent<Server>();
 
-            //warehouse1.showLinks(, sw);
+            var success = Association<Warehouse, Server>.CreateAssociation<Warehouse, Server>(warehouse1, server1, 999, 999);
+            Console.WriteLine(success);
+            var ass = Association<Warehouse, Server>.GetAssociation<Warehouse, Server>(warehouse1, server1);
+
+            Console.WriteLine(ass.ToString());
 
             Console.ReadLine();
         }

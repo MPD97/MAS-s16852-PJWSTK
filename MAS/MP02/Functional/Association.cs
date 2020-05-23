@@ -7,112 +7,100 @@ namespace MP02.Functional
 {
     public class Association<T, R> : IAssociation where T : ObjectPlusPlus where R : ObjectPlusPlus
     {
-        private string name;
-        private T class1;
-        private R class2;
-        private Association<R, T> opposite;
-        int maxCardinalityClass;
-        
-        private static HashSet<Association<ObjectPlusPlus, ObjectPlusPlus>> associationSet = new HashSet<Association<ObjectPlusPlus, ObjectPlusPlus>>();
+        private string Name { get; set; }
+        private T Class1 { get; set; }
+        private R Class2 { get; set; }
+        private Association<R, T> OppositeAssociationEnd { get; set; }
+        private int MaximumCardinality { get; set; }
+
+        private static HashSet<Association<T, R>> AllAssociations { get; set; } = new HashSet<Association<T, R>>();
+
 
         private Association(T class1, R class2, int maxCardinalityClass, string name)
         {
-            this.name = name;
-            this.class1 = class1;
-            this.class2 = class2;
-            this.maxCardinalityClass = maxCardinalityClass;
+            Name = name;
+            Class1 = class1;
+            Class2 = class2;
+            MaximumCardinality = maxCardinalityClass;
         }
 
-        public static bool createAssociation<X, Y>(X class1, Y class2, int maxCardinalityClass1, int maxCardinalityClass2) where X : ObjectPlusPlus where Y : ObjectPlusPlus
+        public static bool CreateAssociation<X, Y>(T class1, R class2, int maxCardinalityClass1, int maxCardinalityClass2) 
+            where X : ObjectPlusPlus where Y : ObjectPlusPlus
         {
-            bool exists = associationSet.Any(obj =>
-                obj.class1.Equals(class1) &&
-                obj.class2.Equals(class2) &&
-                obj.getMaxCardinality() == maxCardinalityClass2 && obj.name == null);
+            bool exists = AllAssociations.Any(obj =>
+                obj.Class1.Equals(class1) &&
+                obj.Class2.Equals(class2) &&
+                obj.GetMaxCardinality() == maxCardinalityClass2 && obj.Name == null);
 
             if (exists)
+            { 
+                return false; 
+            }
 
-            { return false; }
-
-            Association<X ,Y> o = new Association<X, Y>(class1, class2, maxCardinalityClass2, null);
-            o.opposite = new Association<Y, X>(class2, class1, maxCardinalityClass1, null);
-            o.opposite.opposite = o;
-            associationSet.Add(o);
-            associationSet.Add(o.opposite);
+            Association<T, R> o = new Association<T, R>(class1, class2, maxCardinalityClass2, null);
+            o.OppositeAssociationEnd = new Association<R, T>(class2, class1, maxCardinalityClass1, null);
+            o.OppositeAssociationEnd.OppositeAssociationEnd = o;
+            AllAssociations.Add(o);
+            AllAssociations.Add(o.OppositeAssociationEnd as Association<T, R>);
             return true;
 
         }
 
-        public static bool createAssociation<X, Y>(X class1, Y class2, int maxCardinalityClass1, int maxCardinalityClass2, string name, string reverseName) where X : ObjectPlusPlus where Y : ObjectPlusPlus
+        public static bool CreateAssociation<X, Y>(T class1, R class2, int maxCardinalityClass1, int maxCardinalityClass2, string name, string reverseName) where X : ObjectPlusPlus where Y : ObjectPlusPlus
 
         {
 
-            bool exists = associationSet.Any(obj =>
-                    obj.class1.Equals(class1) &&
-                    obj.class2.Equals(class2) &&
-                    obj.getMaxCardinality() == maxCardinalityClass2 &&
-                    obj.name.Equals(name));
+            bool exists = AllAssociations.Any(obj =>
+                    obj.Class1.Equals(class1) &&
+                    obj.Class2.Equals(class2) &&
+                    obj.GetMaxCardinality() == maxCardinalityClass2 &&
+                    obj.Name == name);
 
             if (exists) return false;
 
-            Association<X, Y> o = new Association<X, Y>(class1, class2, maxCardinalityClass2, name);
-            o.opposite = new Association<Y, X>(class2, class1, maxCardinalityClass1, reverseName);
-            o.opposite.opposite = o;
-            associationSet.Add(o);
+            Association<T, R> o = new Association<T, R>(class1, class2, maxCardinalityClass2, name);
+            o.OppositeAssociationEnd = new Association<R, T>(class2, class1, maxCardinalityClass1, reverseName);
+            o.OppositeAssociationEnd.OppositeAssociationEnd = o;
+            AllAssociations.Add(o);
 
-            associationSet.Add(o.opposite);
+            AllAssociations.Add(o.OppositeAssociationEnd as Association<T, R>);
             return true;
 
         }
 
-        public static Association<X, Y> getAssociation<X, Y>(X class1, Y class2) where X : ObjectPlusPlus where Y : ObjectPlusPlus
+        public static Association<T, R> GetAssociation<X, Y>(T class1, R class2) where X : ObjectPlusPlus where Y : ObjectPlusPlus
         {
-            return associationSet.Where(obj => obj.getClass1()
-                   .Equals(class1) && obj.getClass2().Equals(class2)).FirstOrDefault();
+            return AllAssociations.Where(obj => obj.Class1
+                   .Equals(class1) && obj.Class2.Equals(class2)).FirstOrDefault();
         }
 
 
-
-        public static Association<X, Y> getAssociation<X, Y>(X class1, Y class2, string name) where X : ObjectPlusPlus where Y : ObjectPlusPlus
+        public static Association<T, R> GetAssociation<X, Y>(T class1, R class2, string name) where X : ObjectPlusPlus where Y : ObjectPlusPlus
         {
-            return associationSet.Where(obj => obj.getClass1()
-                            .Equals(class1) && obj.getClass2().Equals(class2) && obj.name.Equals(name))
+            return AllAssociations.Where(obj => obj.Class1
+                            .Equals(class1) && obj.Class2.Equals(class2) && obj.Name == name)
                 .FirstOrDefault();
         }
 
-
-        public bool verifyInstance<X, Y>(X o1, Y o2) where X : ObjectPlusPlus where Y : ObjectPlusPlus
+        public bool VerifyInstance<X, Y>(X o1, Y o2) where X : ObjectPlusPlus where Y : ObjectPlusPlus
         {
-            return class1.GetType() == o1.GetType() && class2.GetType() == o2.GetType();
+            return Class1.GetType() == o1.GetType() && Class2.GetType() == o2.GetType();
 
         }
 
-
-        public IAssociation getOpposite()
+        public IAssociation GetOposite()
         {
-            return opposite;
+            return OppositeAssociationEnd;
         }
 
-
-        public int getMaxCardinality()
+        public int GetMaxCardinality()
         {
-            return maxCardinalityClass;
+            return MaximumCardinality;
         }
-
-        public T getClass1()
-        {
-            return class1;
-        }
-
-        public R getClass2()
-        {
-            return class2;
-        }
-
 
         public override string ToString()
         {
-            return "Asocjacja [class1=" + class1 + ", class2=" + class2 + ", name=" + name + "]" + ", Opposite Asocjacja [class1=" + opposite.class1 + ", class2=" + opposite.class2 + ", name=" + opposite.name + "]";
+            return "Asocjacja [class1=" + Class1 + ", class2=" + Class2 + ", name=" + Name + "]" + ", Opposite Asocjacja [class1=" + OppositeAssociationEnd.Class1 + ", class2=" + OppositeAssociationEnd.Class2 + ", name=" + OppositeAssociationEnd.Name + "]";
         }
     }
 }

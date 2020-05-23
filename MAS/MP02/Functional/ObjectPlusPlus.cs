@@ -16,65 +16,64 @@ namespace MP02.Functional
 
         }
 
-        private void addLink(IAssociation roleName, ObjectPlusPlus targetObject, object qualifier, int counter)
+        private void AddLink(IAssociation roleName, ObjectPlusPlus targetObject, object qualifier, int counter)
         {
             Dictionary<object, ObjectPlusPlus> objectLinks;
-            if (!roleName.verifyInstance(this, targetObject)) throw new Exception("obiekty nie pasuja do danej asocjacji");
+            if (!roleName.VerifyInstance(this, targetObject)) throw new Exception("obiekty nie pasuja do danej asocjacji");
 
             if (counter < 1)
             {
                 return;
             }
 
-
-            if (targetObject.containsRole(roleName.getOpposite()))
+            if (targetObject.ContainsRole(roleName.GetOposite()))
             {
-                if (roleName.getOpposite().getMaxCardinality() != 0 && counter == 2 && !(targetObject.roleSize(roleName.getOpposite()) < roleName.getOpposite().getMaxCardinality()))
-                    throw new Exception("Maksymalna licznosc w  " + GetType().Name + " osiagnieta ma juz powiazane: " + targetObject.roleSize(roleName.getOpposite()) + " obiektow");
+                if (roleName.GetOposite().GetMaxCardinality() != 0 && counter == 2 && !(targetObject.RoleSize(roleName.GetOposite()) < roleName.GetOposite().GetMaxCardinality()))
+                    throw new Exception("Maksymalna licznosc w  " + GetType().Name + " osiagnieta ma juz powiazane: " + targetObject.RoleSize(roleName.GetOposite()) + " obiektow");
             }
 
             if (links.ContainsKey(roleName))
             {
                 objectLinks = links[roleName];
-                if (roleName.getMaxCardinality() != 0 && !(objectLinks.Count < roleName.getMaxCardinality()))
-                    throw new Exception("Maksymalna licznosc osiagnieta  " + GetType().Name + "  ma juz powiazane: " + this.roleSize(roleName) + " obiektow");
+                if (roleName.GetMaxCardinality() != 0 && !(objectLinks.Count < roleName.GetMaxCardinality()))
+                    throw new Exception("Maksymalna licznosc osiagnieta  " + GetType().Name + "  ma juz powiazane: " + this.RoleSize(roleName) + " obiektow");
             }
-
             else
             {
                 objectLinks = new Dictionary<object, ObjectPlusPlus>();
                 links.Add(roleName, objectLinks);
             }
+
             if (!objectLinks.ContainsKey(qualifier))
             {
                 objectLinks.Add(qualifier, targetObject);
 
-                targetObject.addLink(roleName.getOpposite(), this, this, counter - 1);
+                targetObject.AddLink(roleName.GetOposite(), this, this, counter - 1);
             }
         }
 
-        public void addLink(IAssociation roleName, ObjectPlusPlus targetObject, object qualifier)
+        public void AddLink(IAssociation roleName, ObjectPlusPlus targetObject, object qualifier)
         {
-            addLink(roleName, targetObject, qualifier, 2);
+            AddLink(roleName, targetObject, qualifier, 2);
         }
 
-        public void addLink(IAssociation roleName, ObjectPlusPlus targetObject)
+        public void AddLink(IAssociation roleName, ObjectPlusPlus targetObject)
         {
-            addLink(roleName, targetObject, targetObject);
+            AddLink(roleName, targetObject, targetObject);
         }
 
-        public void addPart(IAssociation roleName, ObjectPlusPlus partObject)
+        public void AddPart(IAssociation roleName, ObjectPlusPlus partObject)
         {
             if (allParts.Contains(partObject))
             {
                 throw new Exception("The part is already connected to a whole!");
             }
 
-            addLink(roleName, partObject);
+            AddLink(roleName, partObject);
             allParts.Add(partObject);
         }
 
-        public ObjectPlusPlus[] getLinks(IAssociation roleName)
+        public ObjectPlusPlus[] GetLinks(IAssociation roleName)
         {
             Dictionary<object, ObjectPlusPlus> objectLinks;
 
@@ -89,7 +88,7 @@ namespace MP02.Functional
 
 
 
-        public void showLinks(IAssociation roleName, StreamWriter stream)
+        public void ShowLinks(IAssociation roleName, StreamWriter stream)
         {
             Dictionary<object, ObjectPlusPlus> objectLinks;
 
@@ -112,7 +111,7 @@ namespace MP02.Functional
 
 
 
-        public ObjectPlusPlus getLinkedObject(IAssociation roleName, object qualifier)
+        public ObjectPlusPlus GetLinkedObject(IAssociation roleName, object qualifier)
         {
             Dictionary<object, ObjectPlusPlus> objectLinks;
 
@@ -130,22 +129,18 @@ namespace MP02.Functional
             return objectLinks[qualifier];
         }
 
-
-
-        public bool containsRole(IAssociation roleName)
+        public bool ContainsRole(IAssociation roleName)
         {
             return links.ContainsKey(roleName);
         }
 
-        public int roleSize(IAssociation roleName)
+        public int RoleSize(IAssociation roleName)
         {
-            if (!containsRole(roleName)) throw new Exception("Can't get size, No links for the role: " + roleName);
+            if (!ContainsRole(roleName)) throw new Exception("Can't get size, No links for the role: " + roleName);
             return links[roleName].Count;
         }
 
-
-
-        private void removeLink(IAssociation roleName, ObjectPlusPlus targetObject, object qualifier, int counter)
+        private void RemoveLink(IAssociation roleName, ObjectPlusPlus targetObject, object qualifier, int counter)
         {
             if (counter < 1) return;
             Dictionary<object, ObjectPlusPlus> objectLinks;
@@ -157,53 +152,49 @@ namespace MP02.Functional
             if (objectLinks.ContainsKey(qualifier))
             {
                 objectLinks.Remove(qualifier);
-                targetObject.removeLink(roleName.getOpposite(), this, this, counter - 1);
+                targetObject.RemoveLink(roleName.GetOposite(), this, this, counter - 1);
             }
 
             objectLinks.Remove(targetObject);
-            targetObject.removeLink(roleName.getOpposite(), this, qualifier, counter - 1);
-
+            targetObject.RemoveLink(roleName.GetOposite(), this, qualifier, counter - 1);
         }
 
 
-
-        public void removeLink(IAssociation roleName, ObjectPlusPlus targetObject, object qualifier)
+        public void RemoveLink(IAssociation roleName, ObjectPlusPlus targetObject, object qualifier)
         {
-            removeLink(roleName, targetObject, qualifier, 2);
+            RemoveLink(roleName, targetObject, qualifier, 2);
         }
 
-        public void removeLink(IAssociation roleName, ObjectPlusPlus targetObject)
+        public void RemoveLink(IAssociation roleName, ObjectPlusPlus targetObject)
         {
-            removeLink(roleName, targetObject, targetObject, 2);
+            RemoveLink(roleName, targetObject, targetObject, 2);
         }
 
-        public void removePart(IAssociation roleName, ObjectPlusPlus targetObject)
+        public void RemovePart(IAssociation roleName, ObjectPlusPlus targetObject)
         {
-            targetObject.removeObject();
+            targetObject.RemoveObject();
             allParts.Remove(targetObject);
         }
 
         //override
-        public void removeObject()
+        public void RemoveObject()
         {
 
             foreach (var link in links)
             {
                 Dictionary<object, ObjectPlusPlus> objectLinks = link.Value;
 
-
                 foreach (var objLink in objectLinks)
                 {
                     try
                     {
-                        removeLink(link.Key, objLink.Value, objLink.Value);
+                        RemoveLink(link.Key, objLink.Value, objLink.Value);
                     }
                     catch (Exception e)
                     {
                         Console.WriteLine(e.ToString());
                     }
                 }
-                   
             }
             //links.entrySet().iterator().forEachRemaining(entry => {
             //    Dictionary<object, ObjectPlusPlus> objectLinks = entry;
@@ -220,7 +211,7 @@ namespace MP02.Functional
             //    });
 
             //});
-            removeObject();
+            RemoveObject();
         }
 
 
