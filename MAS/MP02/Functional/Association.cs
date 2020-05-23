@@ -25,7 +25,7 @@ namespace MP02.Functional
         }
 
         public static bool CreateAssociation<X, Y>(T class1, R class2, int maxCardinalityClass1, int maxCardinalityClass2) 
-            where X : IObjectPlusPlus where Y : IObjectPlusPlus
+            where X : ObjectPlusPlus where Y : ObjectPlusPlus
         {
             bool exists = AllAssociations.Any(obj =>
                 obj.Class1.Equals(class1) &&
@@ -68,7 +68,6 @@ namespace MP02.Functional
 
             AllAssociations.Add(o.OppositeAssociationEnd);
             return true;
-
         }
 
         public static Association<T, R> GetAssociation<X, Y>(T class1, R class2) where X : ObjectPlusPlus where Y : ObjectPlusPlus

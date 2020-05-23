@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using MP02.Functional;
+using System;
+
 
 namespace MP02
 {
-    public class Component : ObjectPlus
+    public class Component : ObjectPlusPlus
     {
         public int Identifier { get; set; }
 
