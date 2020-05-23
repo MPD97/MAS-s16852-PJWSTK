@@ -19,7 +19,7 @@ namespace MP02.Functional
         private void AddLink(IAssociation roleName, ObjectPlusPlus targetObject, object qualifier, int counter)
         {
             Dictionary<object, ObjectPlusPlus> objectLinks;
-            if (!roleName.VerifyInstance(this, targetObject)) throw new Exception("obiekty nie pasuja do danej asocjacji");
+            if (!roleName.VerifyInstance(this,targetObject) ) throw new Exception("obiekty nie pasuja do danej asocjacji");
 
             if (counter < 1)
             {
@@ -29,14 +29,14 @@ namespace MP02.Functional
             if (targetObject.ContainsRole(roleName.GetOposite()))
             {
                 if (roleName.GetOposite().GetMaxCardinality() != 0 && counter == 2 && !(targetObject.RoleSize(roleName.GetOposite()) < roleName.GetOposite().GetMaxCardinality()))
-                    throw new Exception("Maksymalna licznosc w  " + GetType().Name + " osiagnieta ma juz powiazane: " + targetObject.RoleSize(roleName.GetOposite()) + " obiektow");
+                    throw new Exception($"Maksymalna licznosc w {roleName.Class2.Name} osiagnieta i ma juz powiazane maksymalne: {targetObject.RoleSize(roleName.GetOposite())} obiektow typu {GetType().Name}.");
             }
 
             if (Links.ContainsKey(roleName))
             {
                 objectLinks = Links[roleName];
                 if (roleName.GetMaxCardinality() != 0 && !(objectLinks.Count < roleName.GetMaxCardinality()))
-                    throw new Exception("Maksymalna licznosc osiagnieta  " + GetType().Name + "  ma juz powiazane: " + this.RoleSize(roleName) + " obiektow");
+                    throw new Exception($"Maksymalna licznosc w {GetType().Name} osiagnieta i juz powiazane maksymalne: {RoleSize(roleName)} obiektow typu {roleName.Class2.Name}.");
             }
             else
             {
@@ -62,15 +62,17 @@ namespace MP02.Functional
             AddLink(roleName, targetObject, targetObject);
         }
 
-        public void AddPart(IAssociation roleName, ObjectPlusPlus partObject)
+        internal T AddPart<T>(IAssociation roleName, T partObject) where T : ObjectPlusPlus
         {
             if (AllParts.Contains(partObject))
             {
-                throw new Exception("The part is already connected to a whole!");
+                throw new Exception($"Czesc: {partObject.GetType().Name} wchodzi juz w sklad obiektu-calosc: {GetType().Name}.");
             }
 
             AddLink(roleName, partObject);
             AllParts.Add(partObject);
+            
+            return partObject;
         }
 
         public ObjectPlusPlus[] GetLinks(IAssociation roleName)
@@ -85,8 +87,7 @@ namespace MP02.Functional
 
             return objectLinks.Values.ToArray();
         }
-
-
+        
 
         public void ShowLinks(IAssociation roleName, StreamWriter stream)
         {
@@ -101,7 +102,7 @@ namespace MP02.Functional
 
             var col = objectLinks.Values;
 
-            stream.WriteLine(GetType().Name + " links, role '" + roleName + "':");
+            stream.WriteLine($"Wyswietlam powiazania dla klasy: {GetType().Name}\r\nAsocjacja:{roleName}:");
 
             foreach (object obj in col)
             {
@@ -110,20 +111,19 @@ namespace MP02.Functional
         }
 
 
-
         public ObjectPlusPlus GetLinkedObject(IAssociation roleName, object qualifier)
         {
             Dictionary<object, ObjectPlusPlus> objectLinks;
 
             if (!Links.ContainsKey(roleName))
             {
-                throw new Exception("No links for the role: " + roleName);
+                throw new Exception("Asocjacja nie istnieje: " + roleName);
             }
 
             objectLinks = Links[roleName];
             if (!objectLinks.ContainsKey(qualifier))
             {
-                throw new Exception("No link for the qualifer: " + qualifier);
+                throw new Exception("Brak isnitjacych powiazan kwalifikowanych dla: " + qualifier);
             }
 
             return objectLinks[qualifier];
@@ -146,7 +146,7 @@ namespace MP02.Functional
             Dictionary<object, ObjectPlusPlus> objectLinks;
             if (!Links.ContainsKey(roleName))
             {
-                throw new Exception("No links for the role: " + roleName);
+                throw new Exception("Brak powiazan z rola: " + roleName);
             }
             objectLinks = Links[roleName];
             if (objectLinks.ContainsKey(qualifier))
@@ -177,9 +177,8 @@ namespace MP02.Functional
         }
 
         //override
-        public void RemoveObject()
+        public void RemoveObject() 
         {
-
             foreach (var link in Links)
             {
                 Dictionary<object, ObjectPlusPlus> objectLinks = link.Value;
@@ -196,24 +195,6 @@ namespace MP02.Functional
                     }
                 }
             }
-            //links.entrySet().iterator().forEachRemaining(entry => {
-            //    Dictionary<object, ObjectPlusPlus> objectLinks = entry;
-
-            //    objectLinks.entrySet().iterator().forEachRemaining(innerEntry => {
-            //        try
-            //        {
-            //            this.removeLink(entry.getKey(), innerEntry.getValue(), innerEntry.getKey());
-            //        }
-            //        catch (Exception e)
-            //        {
-            //            e.printStackTrace();
-            //        }
-            //    });
-
-            //});
-            RemoveObject();
         }
-
-
     }
 }

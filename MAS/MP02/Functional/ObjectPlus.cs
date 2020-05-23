@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using MP02.Functional;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 using System;
@@ -113,7 +114,9 @@ namespace MP02
 
             return sb.ToString();
         }
-
+        internal void RemoveFromExtentInCaseOfCompositionWholeDelete(ObjectPlus objToRemove)
+        {
+            AllExtents.Remove(objToRemove.GetType());
+        }
     }
-
 }

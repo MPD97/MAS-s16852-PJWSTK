@@ -1,4 +1,6 @@
-﻿namespace MP02.Functional
+﻿using System;
+
+namespace MP02.Functional
 {
     public interface IAssociation
     {
@@ -9,7 +11,7 @@
         public int GetMaxCardinality();
 
         public string Name { get; set; }
-        public ObjectPlusPlus Class1 { get; set; }
-        public ObjectPlusPlus Class2 { get; set; }
+        public Type Class1 { get; set; }
+        public Type Class2 { get; set; }
     }
 }

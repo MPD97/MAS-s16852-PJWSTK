@@ -1,4 +1,5 @@
 ﻿using MP02.Functional;
+using System;
 
 namespace MP02
 {
@@ -14,5 +15,19 @@ namespace MP02
             ProcessorManufacturer = processorManufacturer;
             Storage = storage;
         }
+
+        public ServerCase CreateAndAddPart<X,Y>(Association<X, Y> association, string brand) where X: ObjectPlusPlus where Y : ObjectPlusPlus
+        {
+            try
+            {
+                return AddPart(association, new ServerCase(brand));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"BLAD: {ex.Message}");
+                return null;
+            }
+        }
+    
     }
 }
