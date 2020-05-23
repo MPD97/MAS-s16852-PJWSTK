@@ -7,13 +7,13 @@ namespace MP02.Functional
 {
     public class Association<T, R> : IAssociation where T : ObjectPlusPlus where R : ObjectPlusPlus
     {
-        private string Name { get; set; }
-        private T Class1 { get; set; }
-        private R Class2 { get; set; }
+        public string Name { get; set; }
+        public ObjectPlusPlus Class1 { get; set; }
+        public ObjectPlusPlus Class2 { get; set; }
         private Association<R, T> OppositeAssociationEnd { get; set; }
         private int MaximumCardinality { get; set; }
 
-        private static HashSet<Association<T, R>> AllAssociations { get; set; } = new HashSet<Association<T, R>>();
+        private static HashSet<IAssociation> AllAssociations { get; set; } = new HashSet<IAssociation>();
 
 
         private Association(T class1, R class2, int maxCardinalityClass, string name)
@@ -25,7 +25,7 @@ namespace MP02.Functional
         }
 
         public static bool CreateAssociation<X, Y>(T class1, R class2, int maxCardinalityClass1, int maxCardinalityClass2) 
-            where X : ObjectPlusPlus where Y : ObjectPlusPlus
+            where X : IObjectPlusPlus where Y : IObjectPlusPlus
         {
             bool exists = AllAssociations.Any(obj =>
                 obj.Class1.Equals(class1) &&
@@ -41,10 +41,13 @@ namespace MP02.Functional
             o.OppositeAssociationEnd = new Association<R, T>(class2, class1, maxCardinalityClass1, null);
             o.OppositeAssociationEnd.OppositeAssociationEnd = o;
             AllAssociations.Add(o);
-            AllAssociations.Add(o.OppositeAssociationEnd as Association<T, R>);
+
+            AllAssociations.Add(o.OppositeAssociationEnd);
             return true;
 
         }
+
+    
 
         public static bool CreateAssociation<X, Y>(T class1, R class2, int maxCardinalityClass1, int maxCardinalityClass2, string name, string reverseName) where X : ObjectPlusPlus where Y : ObjectPlusPlus
 
@@ -63,21 +66,21 @@ namespace MP02.Functional
             o.OppositeAssociationEnd.OppositeAssociationEnd = o;
             AllAssociations.Add(o);
 
-            AllAssociations.Add(o.OppositeAssociationEnd as Association<T, R>);
+            AllAssociations.Add(o.OppositeAssociationEnd);
             return true;
 
         }
 
         public static Association<T, R> GetAssociation<X, Y>(T class1, R class2) where X : ObjectPlusPlus where Y : ObjectPlusPlus
         {
-            return AllAssociations.Where(obj => obj.Class1
+            return (Association<T, R>)AllAssociations.Where(obj => obj.Class1
                    .Equals(class1) && obj.Class2.Equals(class2)).FirstOrDefault();
         }
 
 
         public static Association<T, R> GetAssociation<X, Y>(T class1, R class2, string name) where X : ObjectPlusPlus where Y : ObjectPlusPlus
         {
-            return AllAssociations.Where(obj => obj.Class1
+            return (Association<T, R>) AllAssociations.Where(obj => obj.Class1
                             .Equals(class1) && obj.Class2.Equals(class2) && obj.Name == name)
                 .FirstOrDefault();
         }

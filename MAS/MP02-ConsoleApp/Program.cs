@@ -25,8 +25,9 @@ namespace MP02_ConsoleApp
             //ObjectPlus.ShowExtent<Warehouse>();
             //ObjectPlus.ShowExtent<Server>();
 
-            var success = Association<Warehouse, Server>.CreateAssociation<Warehouse, Server>(warehouse1, server1, 999, 999);
-            Console.WriteLine(success);
+            Association<Warehouse, Server>.CreateAssociation<Warehouse, Server>(warehouse1, server1, 999, 999);
+            Association<Warehouse, Server>.CreateAssociation<Warehouse, Server>(warehouse1, server1, 999, 999);
+
             var ass = Association<Warehouse, Server>.GetAssociation<Warehouse, Server>(warehouse1, server1);
 
             Console.WriteLine(ass.ToString());

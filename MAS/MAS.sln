@@ -9,7 +9,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MP01-ConsoleApp", "MP01-Con
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MP02", "MP02\MP02.csproj", "{0417680B-F4BB-47A4-BEF9-D7448F453052}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MP02-ConsoleApp", "MP02-ConsoleApp\MP02-ConsoleApp.csproj", "{CE4CB7A2-17C8-4602-9BEF-4BE6ED37260E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MP02-ConsoleApp", "MP02-ConsoleApp\MP02-ConsoleApp.csproj", "{CE4CB7A2-17C8-4602-9BEF-4BE6ED37260E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{66E0AEC5-B847-4C01-9230-91D7E33DDC3F}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -7,5 +7,9 @@
         public IAssociation GetOposite();
 
         public int GetMaxCardinality();
+
+        public string Name { get; set; }
+        public ObjectPlusPlus Class1 { get; set; }
+        public ObjectPlusPlus Class2 { get; set; }
     }
 }

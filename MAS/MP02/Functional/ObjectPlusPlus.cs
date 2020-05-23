@@ -8,8 +8,8 @@ namespace MP02.Functional
 {
     public class ObjectPlusPlus : ObjectPlus
     {
-        private Dictionary<IAssociation, Dictionary<object, ObjectPlusPlus>> links = new Dictionary<IAssociation, Dictionary<object, ObjectPlusPlus>>();
-        private static HashSet<ObjectPlusPlus> allParts = new HashSet<ObjectPlusPlus>();
+        private Dictionary<IAssociation, Dictionary<object, ObjectPlusPlus>> Links = new Dictionary<IAssociation, Dictionary<object, ObjectPlusPlus>>();
+        private static HashSet<ObjectPlusPlus> AllParts = new HashSet<ObjectPlusPlus>();
 
         public ObjectPlusPlus() : base()
         {
@@ -32,16 +32,16 @@ namespace MP02.Functional
                     throw new Exception("Maksymalna licznosc w  " + GetType().Name + " osiagnieta ma juz powiazane: " + targetObject.RoleSize(roleName.GetOposite()) + " obiektow");
             }
 
-            if (links.ContainsKey(roleName))
+            if (Links.ContainsKey(roleName))
             {
-                objectLinks = links[roleName];
+                objectLinks = Links[roleName];
                 if (roleName.GetMaxCardinality() != 0 && !(objectLinks.Count < roleName.GetMaxCardinality()))
                     throw new Exception("Maksymalna licznosc osiagnieta  " + GetType().Name + "  ma juz powiazane: " + this.RoleSize(roleName) + " obiektow");
             }
             else
             {
                 objectLinks = new Dictionary<object, ObjectPlusPlus>();
-                links.Add(roleName, objectLinks);
+                Links.Add(roleName, objectLinks);
             }
 
             if (!objectLinks.ContainsKey(qualifier))
@@ -64,24 +64,24 @@ namespace MP02.Functional
 
         public void AddPart(IAssociation roleName, ObjectPlusPlus partObject)
         {
-            if (allParts.Contains(partObject))
+            if (AllParts.Contains(partObject))
             {
                 throw new Exception("The part is already connected to a whole!");
             }
 
             AddLink(roleName, partObject);
-            allParts.Add(partObject);
+            AllParts.Add(partObject);
         }
 
         public ObjectPlusPlus[] GetLinks(IAssociation roleName)
         {
             Dictionary<object, ObjectPlusPlus> objectLinks;
 
-            if (!links.ContainsKey(roleName))
+            if (!Links.ContainsKey(roleName))
             {
                 throw new Exception("No links for the role: " + roleName);
             }
-            objectLinks = links[roleName];
+            objectLinks = Links[roleName];
 
             return objectLinks.Values.ToArray();
         }
@@ -92,12 +92,12 @@ namespace MP02.Functional
         {
             Dictionary<object, ObjectPlusPlus> objectLinks;
 
-            if (!links.ContainsKey(roleName))
+            if (!Links.ContainsKey(roleName))
             {
                 throw new Exception("No links for the role: " + roleName);
             }
 
-            objectLinks = links[roleName];
+            objectLinks = Links[roleName];
 
             var col = objectLinks.Values;
 
@@ -115,12 +115,12 @@ namespace MP02.Functional
         {
             Dictionary<object, ObjectPlusPlus> objectLinks;
 
-            if (!links.ContainsKey(roleName))
+            if (!Links.ContainsKey(roleName))
             {
                 throw new Exception("No links for the role: " + roleName);
             }
 
-            objectLinks = links[roleName];
+            objectLinks = Links[roleName];
             if (!objectLinks.ContainsKey(qualifier))
             {
                 throw new Exception("No link for the qualifer: " + qualifier);
@@ -131,24 +131,24 @@ namespace MP02.Functional
 
         public bool ContainsRole(IAssociation roleName)
         {
-            return links.ContainsKey(roleName);
+            return Links.ContainsKey(roleName);
         }
 
         public int RoleSize(IAssociation roleName)
         {
             if (!ContainsRole(roleName)) throw new Exception("Can't get size, No links for the role: " + roleName);
-            return links[roleName].Count;
+            return Links[roleName].Count;
         }
 
         private void RemoveLink(IAssociation roleName, ObjectPlusPlus targetObject, object qualifier, int counter)
         {
             if (counter < 1) return;
             Dictionary<object, ObjectPlusPlus> objectLinks;
-            if (!links.ContainsKey(roleName))
+            if (!Links.ContainsKey(roleName))
             {
                 throw new Exception("No links for the role: " + roleName);
             }
-            objectLinks = links[roleName];
+            objectLinks = Links[roleName];
             if (objectLinks.ContainsKey(qualifier))
             {
                 objectLinks.Remove(qualifier);
@@ -173,14 +173,14 @@ namespace MP02.Functional
         public void RemovePart(IAssociation roleName, ObjectPlusPlus targetObject)
         {
             targetObject.RemoveObject();
-            allParts.Remove(targetObject);
+            AllParts.Remove(targetObject);
         }
 
         //override
         public void RemoveObject()
         {
 
-            foreach (var link in links)
+            foreach (var link in Links)
             {
                 Dictionary<object, ObjectPlusPlus> objectLinks = link.Value;
 
