@@ -8,7 +8,7 @@ namespace MP02
     public class ServerCluster : ObjectPlusPlus
     {
         public string MAC { get; set; }
-        internal ServerCluster(string mac) : base()
+        protected internal ServerCluster(string mac) : base()
         {
             MAC = mac;
         }

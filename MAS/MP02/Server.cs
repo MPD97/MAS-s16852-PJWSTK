@@ -16,17 +16,9 @@ namespace MP02
             Storage = storage;
         }
 
-        public ServerCluster CreateAndAddPart<X,Y>(Association<X, Y> association, string mac) where X: ObjectPlusPlus where Y : ObjectPlusPlus
+        public ServerCluster CreateAndAddPart<X, Y>(Association<X, Y> association, string mac) where X : ObjectPlusPlus where Y : ObjectPlusPlus
         {
-            try
-            {
-                return AddPart(association, new ServerCluster(mac));
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"BLAD: {ex.Message}");
-                return null;
-            }
+            return AddPart(association, new ServerCluster(mac));
         }
         public ServerCluster CreateAndAddPart<X, Y>(Association<X, Y> association, ServerCluster existingCluster) where X : ObjectPlusPlus where Y : ObjectPlusPlus
         {
@@ -34,16 +26,7 @@ namespace MP02
             {
                 throw new Exception("ServerCluster nie może być null.");
             }
-
-            try
-            {
-                return AddPart(association, existingCluster);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"BLAD: {ex.Message}");
-                return null;
-            }
+            return AddPart(association, existingCluster);
         }
 
     }

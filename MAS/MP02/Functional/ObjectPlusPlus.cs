@@ -102,14 +102,13 @@ namespace MP02.Functional
 
             var col = objectLinks.Values;
 
-            stream.WriteLine($"Wyswietlam powiazania dla klasy: {GetType().Name}\r\nAsocjacja:{roleName}:");
+            stream.WriteLine($"Wyswietlam powiazania dla klasy: {GetType().Name}\r\n{roleName}:");
 
             foreach (object obj in col)
             {
                 stream.WriteLine("   " + obj);
             }
         }
-
 
         public ObjectPlusPlus GetLinkedObject(IAssociation roleName, object qualifier)
         {

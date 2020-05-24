@@ -7,8 +7,11 @@ namespace MP02_ConsoleApp
 {
     class Program
     {
+
         static void Main(string[] args)
         {
+
+
             #region Inicjalizacja Strumienia Wyjścia Na Konsole
             var sw = new StreamWriter(Console.OpenStandardOutput());
             sw.AutoFlush = true;
@@ -38,7 +41,7 @@ namespace MP02_ConsoleApp
 
 
             #region Asocjacja "Zwykła"
-            Console.WriteLine($"\r\n|||||||||||||| ~Asocjacja Zwykla~ ||||||||||||||");
+            WriteColor($"\r\n|||||||||||||||||||||| ~Asocjacja Zwykla~ |||||||||||||||||||||||", ConsoleColor.DarkGreen);
 
             // Tworze asocjację "Zwykłą" między dwoma obiektami Warehouse i EndpointDevice o liczności 0..1 Warehouse do wielu EndpointDevice.
             Association<Warehouse, EndpointDevice>.CreateAssociation(1, 0, "przechowuje", "jest przechowywany w");
@@ -50,36 +53,36 @@ namespace MP02_ConsoleApp
             warehouse1.AddLink(WHEDAssociation, endpointDevice1);
             warehouse1.AddLink(WHEDAssociation, endpointDevice3);
 
-            Console.WriteLine($"==================== Stworzone asocjacje =====================");
+            WriteColor($"===================== Stworzone asocjacje =======================", ConsoleColor.Blue);
             warehouse1.ShowLinks(WHEDAssociation, sw);
-            Console.WriteLine($"==================== ^^^^^^^^^^^^^^^^^^^ =====================");
+            WriteColor($"===================== ^^^^^^^^^^^^^^^^^^^ =======================", ConsoleColor.Blue);
 
             // ... lecz nie możemy dodać relacji z tym samym EndpointDevice dwókrotnie.
             try { warehouse1.AddLink(WHEDAssociation, endpointDevice1); }
             catch (Exception ex)
-            { Console.WriteLine($"BLAD: {ex.Message}"); }
+            { WriteColor($"BLAD: {ex.Message}", ConsoleColor.DarkRed); }
 
 
             // Chyba że usuniemy najpierw stworzoną asocjację
             warehouse1.RemoveLink(WHEDAssociation, endpointDevice1);
 
-            Console.WriteLine($"================== Po usunieciu asocjacji ====================");
+            WriteColor($"=================== Po usunieciu asocjacji =========+============", ConsoleColor.Blue);
             warehouse1.ShowLinks(WHEDAssociation, sw);
-            Console.WriteLine($"================== ^^^^^^^^^^^^^^^^^^^^^^ ====================");
+            WriteColor($"=================== ^^^^^^^^^^^^^^^^^^^^^^ ======================", ConsoleColor.Blue);
 
             // I dodamy ją ponownie.
             warehouse1.AddLink(WHEDAssociation, endpointDevice1);
 
             // Można także usunąć asocjację w drugą stronę.
             warehouse1.RemoveObject();
-            Console.WriteLine($"================= Po usunieciu asocjacji w druga strone ================");
+            WriteColor($"============== Po usunieciu asocjacji w druga strone ============", ConsoleColor.Blue);
             warehouse1.ShowLinks(WHEDAssociation, sw);
-            Console.WriteLine($"================= ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ ================");
+            WriteColor($"============== ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ ============", ConsoleColor.Blue);
 
             #endregion
 
             #region Asocjacja Z Atrybutem
-            Console.WriteLine($"\r\n|||||||||||||| ~Asocjacja z Atrybutem~ ||||||||||||||");
+            WriteColor($"\r\n|||||||||||||||||||| ~Asocjacja z Atrybutem~ ||||||||||||||||||||", ConsoleColor.DarkGreen);
 
             // Tworze asocjację z atrybutem z użyciem klasy pośredniczącej StorageProcess, między dwoma obiektami Warehouse i EndpointDevice.
             // StorageProcess wiele, Warehouse      1
@@ -95,21 +98,23 @@ namespace MP02_ConsoleApp
             storageProcess1.AddLink(SPEAssociation, endpointDevice1);
 
 
-            // Program nadal pilnuje liczności asocjacji kwalifikowanej
+            // Program nadal pilnuje liczności asocjacji z atrybutem
             try
             {
                 storageProcess1.AddLink(SPWAssociation, warehouse2);
                 storageProcess1.AddLink(SPEAssociation, endpointDevice2);
             }
             catch (Exception ex)
-            { Console.WriteLine($"BLAD: {ex.Message}"); }
+            {
+                WriteColor($"BLAD: {ex.Message}", ConsoleColor.DarkRed); 
+            }
 
             storageProcess1.GetLinks(SPWAssociation);
 
             #endregion
 
             #region Asocjacja Kwalifikowana
-            Console.WriteLine($"\r\n|||||||||||||| ~Asocjacja Kwalifikowana~ ||||||||||||||");
+            WriteColor($"\r\n|||||||||||||||||||| ~Asocjacja Kwalifikowana~ ||||||||||||||||||", ConsoleColor.DarkGreen);
 
             // Tworzę asocjacje kwalifikowaną między dwoma obiektami EndpointDevice i CommunicationModule, gdzie 
             // CommunicationModule konkretnie identyfikowana unikatowym numerem IMEI.
@@ -127,15 +132,15 @@ namespace MP02_ConsoleApp
             // Pobieram CommunicationModule za pomocą kwalifikatora - IMEI
             var commModule = endpointDevice3.GetLinkedObject(EDCAssociation, communicationModule3.IMEI);
 
-            Console.WriteLine($"====== Obiekt pobrany za pomoca kwalifikatora ========");
-            Console.WriteLine($"Czy to ten sam obiekt? {communicationModule3.Equals(commModule)}");
+            WriteColor($"========= Obiekt pobrany za pomoca kwalifikatora ================", ConsoleColor.Blue);
+            WriteColor($"Czy to ten sam obiekt? {communicationModule3.Equals(commModule)}", ConsoleColor.DarkMagenta);
             Console.WriteLine(commModule.ToStringJSON());
-            Console.WriteLine($"====== ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ ========");
+            WriteColor($"========= ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ ================", ConsoleColor.Blue);
 
             #endregion
 
             #region Kompozycja
-            Console.WriteLine($"\r\n||||||||||||||||||| ~Kompozycja~ |||||||||||||||||||");
+            WriteColor($"\r\n||||||||||||||||||||||||| ~Kompozycja~ ||||||||||||||||||||||||||", ConsoleColor.DarkGreen);
 
             // Klasa ServerCluster jest częścią całości, czyli klasy Server.
 
@@ -147,8 +152,9 @@ namespace MP02_ConsoleApp
             var SSCssociation = Association<Server, ServerCluster>.GetAssociation();
 
             // 1. Blokowanie samodzielnego tworzenia części (istnienie części bez całości).
-            // Obiekt ServerCase nie może zostać utworzony "od tak" z uwagi na użycie modyfikatora dostępu Internal.
-            // Klasę ServerCase można utworzyć jedynie podczas istnienia obiektu Server, poprzez użycie metody CreateAndAddPart.
+            // Obiekt ServerCluster nie może zostać utworzony "od tak" z uwagi na użycie modyfikatora dostępu Internal.
+            // Klasę ServerCluster można utworzyć jedynie podczas istnienia obiektu Server, poprzez użycie metody CreateAndAddPart.
+            // Dostęp został ograniczony do poziomu protected internal, więć nie można użyć konstruktora tej klasy poza biblioteką źródłową
             // ServerCluster server = new ServerCluster("aa"); // Błąd kompilacji.
 
             // Utworzenie i dodanie części do Obiektu-Całości oraz zwrócenie nowo utwrzonego obiektu.
@@ -156,22 +162,30 @@ namespace MP02_ConsoleApp
             var serverCluster2 = server1.CreateAndAddPart(SSCssociation, "42:a5:eb:d2:8e:88");
 
             // Wyświetlenie elementów kompozycji przed usunięciem całości.
-            Console.WriteLine($"========== Wszystkie elementy kompozycji ===========");
+            WriteColor($"================= Wszystkie elementy kompozycji =================", ConsoleColor.Blue);
             server1.ShowLinks(SSCssociation, sw);
-            Console.WriteLine($"========== ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ ===========");
+            WriteColor($"================= ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ =================", ConsoleColor.Blue);
 
             // 3. Usuwanie części przy usuwaniu całości
             server1.RemoveObject();
 
             // Wyświetlenie elementów kompozycji po usunięciu całości.
-            Console.WriteLine($"========== Wszystkie elementy kompozycji po usunieciu czesci-calosci ===========");
+            WriteColor($"=== Wszystkie elementy kompozycji po usunieciu czesci-calosci ===", ConsoleColor.Blue);
             server1.ShowLinks(SSCssociation, sw);
-            Console.WriteLine($"========== ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ ===========");
+            WriteColor($"=== ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ ===", ConsoleColor.Blue);
             #endregion
 
 
-            Console.WriteLine($"=========== Koniec ============");
+            WriteColor($"============================ Koniec =============================", ConsoleColor.Blue);
             Console.ReadLine();
+        }
+
+        private static ConsoleColor currentForeground = ConsoleColor.White;
+        private static void WriteColor(string text, ConsoleColor color)
+        {
+            Console.ForegroundColor = color;
+            Console.WriteLine(text);
+            Console.ForegroundColor = currentForeground;
         }
     }
 }
