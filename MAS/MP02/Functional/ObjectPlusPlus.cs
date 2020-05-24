@@ -19,7 +19,8 @@ namespace MP02.Functional
         private void AddLink(IAssociation roleName, ObjectPlusPlus targetObject, object qualifier, int counter)
         {
             Dictionary<object, ObjectPlusPlus> objectLinks;
-            if (!roleName.VerifyInstance(this,targetObject) ) throw new Exception("obiekty nie pasuja do danej asocjacji");
+            if (roleName.VerifyInstance(this,targetObject) == false) 
+                throw new Exception("obiekty nie pasuja do podanej asocjacji.");
 
             if (counter < 1)
             {
@@ -44,7 +45,7 @@ namespace MP02.Functional
                 Links.Add(roleName, objectLinks);
             }
 
-            if (!objectLinks.ContainsKey(qualifier))
+            if (objectLinks.ContainsKey(qualifier) == false)
             {
                 objectLinks.Add(qualifier, targetObject);
 
@@ -79,23 +80,22 @@ namespace MP02.Functional
         {
             Dictionary<object, ObjectPlusPlus> objectLinks;
 
-            if (!Links.ContainsKey(roleName))
+            if (Links.ContainsKey(roleName) == false)
             {
-                throw new Exception("No links for the role: " + roleName);
+                throw new Exception("Brak powiazan dla relacji: " + roleName);
             }
             objectLinks = Links[roleName];
 
             return objectLinks.Values.ToArray();
         }
-        
 
         public void ShowLinks(IAssociation roleName, StreamWriter stream)
         {
             Dictionary<object, ObjectPlusPlus> objectLinks;
 
-            if (!Links.ContainsKey(roleName))
+            if (Links.ContainsKey(roleName) == false)
             {
-                throw new Exception("No links for the role: " + roleName);
+                throw new Exception("Brak powiazan dla relacji: " + roleName);
             }
 
             objectLinks = Links[roleName];
@@ -115,13 +115,13 @@ namespace MP02.Functional
         {
             Dictionary<object, ObjectPlusPlus> objectLinks;
 
-            if (!Links.ContainsKey(roleName))
+            if (Links.ContainsKey(roleName) == false)
             {
                 throw new Exception("Asocjacja nie istnieje: " + roleName);
             }
 
             objectLinks = Links[roleName];
-            if (!objectLinks.ContainsKey(qualifier))
+            if (objectLinks.ContainsKey(qualifier) == false)
             {
                 throw new Exception("Brak isnitjacych powiazan kwalifikowanych dla: " + qualifier);
             }
@@ -136,7 +136,8 @@ namespace MP02.Functional
 
         public int RoleSize(IAssociation roleName)
         {
-            if (!ContainsRole(roleName)) throw new Exception("Can't get size, No links for the role: " + roleName);
+            if (ContainsRole(roleName) == false) 
+                throw new Exception("Nie moge pobrac rozmiaru relacji z uwagi na brak asocjacji: " + roleName);
             return Links[roleName].Count;
         }
 
@@ -144,7 +145,7 @@ namespace MP02.Functional
         {
             if (counter < 1) return;
             Dictionary<object, ObjectPlusPlus> objectLinks;
-            if (!Links.ContainsKey(roleName))
+            if (Links.ContainsKey(roleName) == false)
             {
                 throw new Exception("Brak powiazan z rola: " + roleName);
             }
@@ -176,7 +177,6 @@ namespace MP02.Functional
             AllParts.Remove(targetObject);
         }
 
-        //override
         public void RemoveObject() 
         {
             foreach (var link in Links)
@@ -196,5 +196,6 @@ namespace MP02.Functional
                 }
             }
         }
+        // TODO: Usuwanie z extensji
     }
 }

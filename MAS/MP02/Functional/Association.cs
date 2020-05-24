@@ -24,8 +24,7 @@ namespace MP02.Functional
             MaximumCardinality = maxCardinalityClass;
         }
 
-        public static bool CreateAssociation<X, Y>(int maxCardinalityClass1, int maxCardinalityClass2)
-            where X : ObjectPlusPlus where Y : ObjectPlusPlus
+        public static bool CreateAssociation(int maxCardinalityClass1, int maxCardinalityClass2)
         {
             bool exists = AllAssociations.Any(obj =>
                 obj.Class1.Equals(typeof(T)) &&
@@ -49,8 +48,7 @@ namespace MP02.Functional
 
 
 
-        public static bool CreateAssociation<X, Y>(int maxCardinalityClass1, int maxCardinalityClass2, string name, string reverseName) where X : ObjectPlusPlus where Y : ObjectPlusPlus
-
+        public static bool CreateAssociation(int maxCardinalityClass1, int maxCardinalityClass2, string name, string reverseName) 
         {
 
             bool exists = AllAssociations.Any(obj =>
@@ -70,21 +68,22 @@ namespace MP02.Functional
             return true;
         }
 
-        public static Association<T, R> GetAssociation<X, Y>() where X : ObjectPlusPlus where Y : ObjectPlusPlus
+        public static Association<T, R> GetAssociation() 
         {
             return (Association<T, R>)AllAssociations.Where(obj => obj.Class1
                    .Equals(typeof(T)) && obj.Class2.Equals(typeof(R))).FirstOrDefault();
         }
 
 
-        public static Association<T, R> GetAssociation<X, Y>(string name) where X : ObjectPlusPlus where Y : ObjectPlusPlus
+        public static Association<T, R> GetAssociation(string name) 
         {
             return (Association<T, R>)AllAssociations.Where(obj => obj.Class1
                            .Equals(typeof(T)) && obj.Class2.Equals(typeof(R)) && obj.Name == name)
                 .FirstOrDefault();
         }
 
-        public bool VerifyInstance<X, Y>(X o1, Y o2) where X : ObjectPlusPlus where Y : ObjectPlusPlus
+        public bool VerifyInstance<X, Y>(X o1, Y o2) 
+            where X : ObjectPlusPlus where Y : ObjectPlusPlus
         {
             return Class1 == o1.GetType() && Class2 == o2.GetType();
         }
@@ -103,5 +102,7 @@ namespace MP02.Functional
         {
             return $"Asocjacja miedzy [{Class1.Name}], a [{Class2.Name}] o nazwie [{Name}].\r\nPrzeciwna Asocjacja miedzy [{GetOposite().Class1.Name}], a [{GetOposite().Class2.Name}] o nazwie [{GetOposite().Name}].\r\n";
         }
+
+       
     }
 }

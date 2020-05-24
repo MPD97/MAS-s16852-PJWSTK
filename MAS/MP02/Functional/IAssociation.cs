@@ -4,7 +4,7 @@ namespace MP02.Functional
 {
     public interface IAssociation
     {
-        public bool VerifyInstance<X, Y>(X o1, Y o2) where X : ObjectPlusPlus where Y : ObjectPlusPlus;
+        public bool VerifyInstance<T, R>(T o1, R o2) where T : ObjectPlusPlus where R : ObjectPlusPlus;
 
         public IAssociation GetOposite();
 

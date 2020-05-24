@@ -39,11 +39,12 @@ namespace MP02_ConsoleApp
 
             #region Asocjacja "Zwykła"
             Console.WriteLine($"\r\n|||||||||||||| ~Asocjacja Zwykla~ ||||||||||||||");
+
             // Tworze asocjację "Zwykłą" między dwoma obiektami Warehouse i EndpointDevice o liczności 0..1 Warehouse do wielu EndpointDevice.
-            Association<Warehouse, EndpointDevice>.CreateAssociation<Warehouse, EndpointDevice>(1, 0);
+            Association<Warehouse, EndpointDevice>.CreateAssociation(1, 0, "przechowuje", "jest przechowywany w");
 
             // Pobieram utworzoną asociację między obiektami i przypisuję ją do zmiennej.
-            var WHEDAssociation = Association<Warehouse, EndpointDevice>.GetAssociation<Warehouse, EndpointDevice>();
+            var WHEDAssociation = Association<Warehouse, EndpointDevice>.GetAssociation();
 
             // Wiele EndpointDevice może tworzyć relację z tym samym Magazynem.
             warehouse1.AddLink(WHEDAssociation, endpointDevice1);
@@ -83,12 +84,12 @@ namespace MP02_ConsoleApp
             // Tworze asocjację z atrybutem z użyciem klasy pośredniczącej StorageProcess, między dwoma obiektami Warehouse i EndpointDevice.
             // StorageProcess wiele, Warehouse      1
             // StorageProcess wiele, EndpointDevice 1
-            Association<StorageProcess, Warehouse>.CreateAssociation<StorageProcess, Warehouse>(0, 1);
-            Association<StorageProcess, EndpointDevice>.CreateAssociation<StorageProcess, EndpointDevice>(0, 1);
+            Association<StorageProcess, Warehouse>.CreateAssociation(0, 1);
+            Association<StorageProcess, EndpointDevice>.CreateAssociation(0, 1);
 
             // Pobieram utworzone asociacje między obiektami i przypisuję ją do zmiennej.
-            var SPWAssociation = Association<StorageProcess, Warehouse>.GetAssociation<StorageProcess, Warehouse>();
-            var SPEAssociation = Association<StorageProcess, EndpointDevice>.GetAssociation<StorageProcess, EndpointDevice>();
+            var SPWAssociation = Association<StorageProcess, Warehouse>.GetAssociation();
+            var SPEAssociation = Association<StorageProcess, EndpointDevice>.GetAssociation();
 
             storageProcess1.AddLink(SPWAssociation, warehouse1);
             storageProcess1.AddLink(SPEAssociation, endpointDevice1);
@@ -113,10 +114,10 @@ namespace MP02_ConsoleApp
             // Tworzę asocjacje kwalifikowaną między dwoma obiektami EndpointDevice i CommunicationModule, gdzie 
             // CommunicationModule konkretnie identyfikowana unikatowym numerem IMEI.
             // Zaczynam od zdefiniowania zwykłej asocjacji jeden do wielu, gdzie jeden po stronie EndpointDevice, a wiele po stronie CommunicationModule.
-            Association<EndpointDevice, CommunicationModule>.CreateAssociation<EndpointDevice, CommunicationModule>(1, 0);
+            Association<EndpointDevice, CommunicationModule>.CreateAssociation(1, 0);
 
             // Pobieram utworzoną asociacje między obiektami i przypisuję ją do zmiennej.
-            var EDCAssociation = Association<EndpointDevice, CommunicationModule>.GetAssociation<EndpointDevice, CommunicationModule>();
+            var EDCAssociation = Association<EndpointDevice, CommunicationModule>.GetAssociation();
 
             // Dodaje powiązania z użyciem kwalifikatora.
             endpointDevice3.AddLink(EDCAssociation, communicationModule1, communicationModule1.IMEI);
@@ -136,23 +137,23 @@ namespace MP02_ConsoleApp
             #region Kompozycja
             Console.WriteLine($"\r\n||||||||||||||||||| ~Kompozycja~ |||||||||||||||||||");
 
-            // Klasa ServerCase jest częścią całości, czyli klasy Server.
+            // Klasa ServerCluster jest częścią całości, czyli klasy Server.
 
             // 2. Zakazanie współdzielenia części.
             // Realizacja poprzez zwykłe ograniczenie liczności część całość podczas tworzenia asocjacji.
-            Association<Server, ServerCase>.CreateAssociation<Server, ServerCase>(1, 0);
+            Association<Server, ServerCluster>.CreateAssociation(1, 0);
 
             // Pobieram utworzoną asociacje między obiektami i przypisuję ją do zmiennej.
-            var SSCssociation = Association<Server, ServerCase>.GetAssociation<Server, ServerCase>();
+            var SSCssociation = Association<Server, ServerCluster>.GetAssociation();
 
             // 1. Blokowanie samodzielnego tworzenia części (istnienie części bez całości).
             // Obiekt ServerCase nie może zostać utworzony "od tak" z uwagi na użycie modyfikatora dostępu Internal.
             // Klasę ServerCase można utworzyć jedynie podczas istnienia obiektu Server, poprzez użycie metody CreateAndAddPart.
-            // ServerCase server = new ServerCase("aa"); // Błąd kompilacji.
+            // ServerCluster server = new ServerCluster("aa"); // Błąd kompilacji.
 
             // Utworzenie i dodanie części do Obiektu-Całości oraz zwrócenie nowo utwrzonego obiektu.
-            var serverCase1 = server1.CreateAndAddPart(SSCssociation, "Dell Premium Case");
-            server1.CreateAndAddPart(SSCssociation, "Dell Amazing Case Series III");
+            var serverCluster1 = server1.CreateAndAddPart(SSCssociation, "da:9b:14:b1:aa:70");
+            var serverCluster2 = server1.CreateAndAddPart(SSCssociation, "42:a5:eb:d2:8e:88");
 
             // Wyświetlenie elementów kompozycji przed usunięciem całości.
             Console.WriteLine($"========== Wszystkie elementy kompozycji ===========");
