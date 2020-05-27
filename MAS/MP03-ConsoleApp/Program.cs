@@ -16,6 +16,7 @@ namespace MP03_ConsoleApp
             Console.SetOut(sw);
             #endregion
 
+
             #region Klasa abstrakcyjna / polimorfizm
 
             // Instancja klasy User nie może zostać utwrzona
@@ -68,8 +69,34 @@ namespace MP03_ConsoleApp
 
             #endregion
 
+            #region Wielodziedziczenie
+
+            // Realizacja wielodziedziczenia z wykorzystaniem kompozycji
+
+            // W tym przykładzie całościa jest klasa AllInOneModule, a częścią GPSModule. Klasa dziedziczy z BluetoothModule.
+            Association<AllInOneModule, GPSModule>.CreateAssociation(1, 0);
+
+            // Pobieram utworzone asociacje między obiektami i przypisuje je do zmiennych.
+            var AIOMAssociation = Association<AllInOneModule, GPSModule>.GetAssociation();
+
+            // Stworzenie zwykłej instancji klasy GPSModule
+            GPSModule gpsModule = new GPSModule(new string[] { "AVLSAT", "EzLink", "Kingneed" });
+
+            // Wyswietlenie wyniku metody GetAmoutOfConnectedDevices()
+            // Dla zwykłego modułu GPS Wyświetlone zostaną tylko informacje o satelitach
+            WriteColor(gpsModule.GetAmoutOfConnectedDevices(), ConsoleColor.DarkGreen);
+
+            // Utworzenie wielodziedziczenionej klasy z użyciem kompozycji
+            AllInOneModule aioModule = new AllInOneModule(AIOMAssociation, "5.0", new string[] { "AVLSAT", "EzLink", "Kingneed" });
+
+            // Wyswietlenie wyniku metody GetAmoutOfConnectedDevices() 
+            // Dla wielodziedziczonego modułu GPS oraz Bluetooth wyświetlone zostaną informacje z obu modułów.
+            WriteColor(aioModule.GetAmoutOfConnectedDevices(), ConsoleColor.Blue);
+            #endregion
+
 
             Console.ReadLine();
+
         }
 
         private static ConsoleColor currentForeground = ConsoleColor.White;
