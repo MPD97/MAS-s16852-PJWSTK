@@ -16,29 +16,81 @@ namespace MP03
         {
             BirthDate = birthDate;
 
-            if (roleName == null)
-            {
-                throw new Exception("Rola nie moze byc null.");
-            }
+            AddServiceman(roleName, specialization);
         }
 
         public Employee(IAssociation roleName, DateTime birthDate, bool forkliftLicense) : base()
         {
             BirthDate = birthDate;
 
+            AddStorekeeper(roleName, forkliftLicense);
+        }
+
+        private void AddServiceman(IAssociation roleName, string specialization)
+        {
             if (roleName == null)
             {
-                throw new Exception("Rola nie moze byc null.");
+                throw new Exception("Asocjacja nie moze byc null.");
+            }
+
+            AddPart(roleName, new EmployeeServiceman(BirthDate, specialization));
+        }
+
+        private void AddStorekeeper(IAssociation roleName, bool forkliftLicense)
+        {
+            if (roleName == null)
+            {
+                throw new Exception("Asocjacja nie moze byc null.");
+            }
+
+            AddPart(roleName, new EmployeeStorekeeper(BirthDate, forkliftLicense));
+        }
+
+        public bool HasForkliftLicense(IAssociation roleName)
+        {
+            if (roleName == null)
+            {
+                throw new Exception("Asocjacja nie moze byc null.");
+            }
+
+            try
+            {
+                ObjectPlusPlus[] obj = GetLinks(roleName);
+                if (obj.Length != 1 || obj[0] is EmployeeStorekeeper == false)
+                {
+                    throw new Exception("Obiekt nie jest Magazynierem.");
+                }
+
+                return (obj[0] as EmployeeStorekeeper).ForkliftLicense;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw new Exception("Obiekt nie jest Magazynierem.");
             }
         }
-
-        private void AddServiceman()
+        public string HasSpecialization(IAssociation roleName)
         {
+            if (roleName == null)
+            {
+                throw new Exception("Asocjacja nie moze byc null.");
+            }
 
-        }
-        private void AddStorekeeper()
-        {
+            try
+            {
+                ObjectPlusPlus[] obj = GetLinks(roleName);
+                if (obj.Length != 1 || obj[0] is EmployeeServiceman == false)
+                {
+                    throw new Exception("Obiekt nie jest Serwisantem.");
+                }
 
+                return (obj[0] as EmployeeServiceman).Specialization;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw new Exception("Obiekt nie jest Serwisantem.");
+            }
         }
     }
-} 
+}
