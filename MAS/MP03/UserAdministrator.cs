@@ -1,6 +1,7 @@
 ﻿using System;
+using System.IO;
 
-namespace MP02
+namespace MP03
 {
     public class UserAdministrator : User
     {
@@ -16,6 +17,11 @@ namespace MP02
         public static void DeleteUser()
         {
             throw new NotImplementedException();                                               // Metoda klasowa
+        }
+
+        public override void GetUserInfo(StreamWriter streamWriter)                            // Przesłonięcie metody
+        {
+            streamWriter.WriteLine("Jestem Administratorem");
         }
     }
 } 
