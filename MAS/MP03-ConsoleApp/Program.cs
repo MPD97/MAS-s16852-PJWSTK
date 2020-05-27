@@ -47,14 +47,24 @@ namespace MP03_ConsoleApp
             var servicemanAssociation = Association<Employee, EmployeeServiceman>.GetAssociation();
             var storekeeperAssociation = Association<Employee, EmployeeStorekeeper>.GetAssociation();
 
+            // Blokada tworzenia części (klas między którymi zachodzi overlapping), bez istnienia klasy całości (nadklasy).
+            // EmployeeServiceman employeeServiceman = new EmployeeServiceman(DateTime.Now, "ENGINEER");
+            // EmployeeStorekeeper employeeStorekeeper = new EmployeeStorekeeper(DateTime.Now, true);
 
+            // Utworzenie klas miedyz ktorymi zachodzi overlapping
+            Employee serviceman = new Employee(servicemanAssociation, DateTime.Now.AddYears(30), "ENGINEER");
+            Employee storekeeper = new Employee(storekeeperAssociation, DateTime.Now.AddYears(25), true);
 
-            // Jest to możliwe, ponieważ administrator i normalny użytkownik implementuje klasę User.
-            // Wywołuję metodę GetUserInfo która jest abstrakcyjna, a ciało metody zostało zaimplementowane
-            // w sposób inny w obu podklasach
+            // Pobranie wartości unikatowych dla podklas
+            WriteColor($"Jaka ma specjalizacje: {serviceman.HasSpecialization(servicemanAssociation)}", ConsoleColor.Blue);
+            WriteColor($"Posiada licencje na wozki widlowe: {storekeeper.HasForkliftLicense(storekeeperAssociation)}", ConsoleColor.Green);
 
-            admin.GetUserInfo(sw);
-            normal.GetUserInfo(sw);
+            // A teraz pokazanie że overlapping działa
+            Employee servicemanAndStorekeeper = new Employee(storekeeperAssociation, servicemanAssociation, DateTime.Now.AddYears(25), false, "ROBOTICS");
+
+            // Wyświetlenie właściwości między którymi zachodzi overlapping
+            WriteColor($"Jaka ma specjalizacje: {servicemanAndStorekeeper.HasSpecialization(servicemanAssociation)}", ConsoleColor.Blue);
+            WriteColor($"Posiada licencje na wozki widlowe: {servicemanAndStorekeeper.HasForkliftLicense(storekeeperAssociation)}", ConsoleColor.Green);
 
             #endregion
 

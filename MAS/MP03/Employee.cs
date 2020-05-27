@@ -12,18 +12,26 @@ namespace MP03
             BirthDate = birthDate;
         }
 
-        public Employee(IAssociation roleName, DateTime birthDate, string specialization) : base()
+        public Employee(IAssociation roleNameServiceman, DateTime birthDate, string specialization) : base()
         {
             BirthDate = birthDate;
 
-            AddServiceman(roleName, specialization);
+            AddServiceman(roleNameServiceman, specialization);
         }
 
-        public Employee(IAssociation roleName, DateTime birthDate, bool forkliftLicense) : base()
+        public Employee(IAssociation roleNameStorekeeper, DateTime birthDate, bool forkliftLicense) : base()
         {
             BirthDate = birthDate;
 
-            AddStorekeeper(roleName, forkliftLicense);
+            AddStorekeeper(roleNameStorekeeper, forkliftLicense);
+        }
+        public Employee(IAssociation roleNameStorekeeper, IAssociation roleNameServiceman, DateTime birthDate, bool forkliftLicense, string specialization) : base()
+        {
+            BirthDate = birthDate;
+
+            AddStorekeeper(roleNameStorekeeper, forkliftLicense);
+
+            AddServiceman(roleNameServiceman, specialization);
         }
 
         private void AddServiceman(IAssociation roleName, string specialization)
