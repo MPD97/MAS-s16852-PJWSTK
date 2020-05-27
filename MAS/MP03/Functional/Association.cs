@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace MP02.Functional
+namespace MP03.Functional
 {
     public class Association<T, R> : IAssociation where T : ObjectPlusPlus where R : ObjectPlusPlus
     {

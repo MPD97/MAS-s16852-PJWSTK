@@ -1,9 +1,9 @@
-﻿using MP02.Functional;
+﻿using MP03.Functional;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MP02
+namespace MP03
 {
     public class ServerCluster : ObjectPlusPlus
     {

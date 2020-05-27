@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace MP02
+namespace MP03
 {
     [Serializable]
     public class ClassNotFoundException : Exception

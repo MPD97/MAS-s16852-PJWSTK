@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MP03;
+using System;
 using System.IO;
 
 namespace MP03_ConsoleApp
@@ -14,7 +15,26 @@ namespace MP03_ConsoleApp
             Console.SetOut(sw);
             #endregion
 
+            #region Klasa abstrakcyjna / polimorfizm
 
+            // Instancja klasy User nie może zostać utwrzona
+            // User user1 = new User();
+
+            // Tworzę Administratora i zwykłego użytkownika
+            User admin = new UserAdministrator();
+            User normal = new NormalUser();
+
+            // Jest to możliwe, ponieważ administrator i normalny użytkownik implementuje klasę User.
+            // Wywołuję metodę GetUserInfo która jest abstrakcyjna, a ciało metody zostało zaimplementowane
+            // w sposób inny w obu podklasach
+
+            admin.GetUserInfo(sw);
+            normal.GetUserInfo(sw);
+
+            #endregion
+
+
+            Console.ReadLine();
         }
 
         private static ConsoleColor currentForeground = ConsoleColor.White;

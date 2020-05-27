@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MP02.Functional
+namespace MP03.Functional
 {
     public interface IAssociation
     {

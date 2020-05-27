@@ -1,6 +1,6 @@
-﻿using MP02.Functional;
+﻿using MP03.Functional;
 
-namespace MP02
+namespace MP03
 {
     public class License : ObjectPlusPlus
     {

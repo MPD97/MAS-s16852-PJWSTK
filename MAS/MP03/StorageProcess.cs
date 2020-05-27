@@ -1,7 +1,7 @@
-﻿using MP02.Functional;
+﻿using MP03.Functional;
 using System;
 
-namespace MP02
+namespace MP03
 {
     public class StorageProcess : ObjectPlusPlus
     {

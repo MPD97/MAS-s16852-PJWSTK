@@ -6,4 +6,8 @@
     <RootNamespace>MP03_ConsoleApp</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MP03\MP03.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,4 +1,4 @@
-﻿namespace MP02
+﻿namespace MP03
 {
     public class Storekeeper : Employee
     {

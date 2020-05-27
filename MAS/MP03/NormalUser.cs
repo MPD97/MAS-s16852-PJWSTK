@@ -11,7 +11,7 @@ namespace MP03
 
         public override void GetUserInfo(StreamWriter streamWriter)                     // Przesłonięcie metody
         {
-            streamWriter.WriteLine("Jestem użytkownikiem.");
+            streamWriter.WriteLine("Jestem Uzytkownikiem.");
         }
     }
 } 
