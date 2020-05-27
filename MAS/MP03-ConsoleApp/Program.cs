@@ -94,6 +94,26 @@ namespace MP03_ConsoleApp
             WriteColor(aioModule.GetAmoutOfConnectedDevices(), ConsoleColor.Blue);
             #endregion
 
+            #region Wieloaspektowe
+
+            // Realizacja dziedziczenia wieloaspektowego metodą 1.
+            // Atrybuty i metody ze zlikwidowanego aspektu umieszczam w nadklasie
+            // Klasa przed zlikwidowaniem widoczna na obrazie "Wieloaspektowe.png"
+
+            License license = new License { Identificator = "ABC123" };
+
+            // Licencja nie może być jednocześnie pudełkowa i cyfrowa.
+            try
+            {
+                license.BoxNumber = "EFG678";
+            }
+            catch (Exception ex)
+            {
+                WriteColor($"BLAD: {ex.Message}", ConsoleColor.Red);
+            }
+
+
+            #endregion
 
             Console.ReadLine();
 
