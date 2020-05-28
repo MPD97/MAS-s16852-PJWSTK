@@ -19,19 +19,19 @@ namespace MP03_ConsoleApp
 
             #region Klasa abstrakcyjna / polimorfizm
 
-            // Instancja klasy User nie może zostać utwrzona
-            // User user1 = new User();
+            // Instancja klasy Person nie może zostać utwrzona
+            // Person person = new Person();
 
-            // Tworzę Administratora i zwykłego użytkownika
-            User admin = new UserAdministrator();
-            User normal = new NormalUser();
+            // Tworzę PersonClient i zwykłego PersonVisitor
+            Person client = new PersonClient();
+            Person visitor = new PersonVisitor();
 
-            // Jest to możliwe, ponieważ administrator i normalny użytkownik implementuje klasę User.
+            // Jest to możliwe, ponieważ PersonClient i PersonVisitor implementuje klasę Person.
             // Wywołuję metodę GetUserInfo która jest abstrakcyjna, a ciało metody zostało zaimplementowane
             // w sposób inny w obu podklasach
 
-            admin.GetUserInfo(sw);
-            normal.GetUserInfo(sw);
+            client.GetPersonInfo(sw);
+            visitor.GetPersonInfo(sw);
 
             #endregion
 
@@ -111,12 +111,44 @@ namespace MP03_ConsoleApp
             {
                 WriteColor($"BLAD: {ex.Message}", ConsoleColor.Red);
             }
+            #endregion
 
+            #region Dynamic
+
+            // Implementacja dziedziczenia dynamicznego z użyciem kompozycji i construktora kopiującego
+
+            // Tworzę potrzebne asocjacje między klasami
+            // W tym przykładzie całościa jest klasa User, a częsciami, między którymi zachodzi dziedziczenie dynamiczne, NormalUser oraz UserAdministrator.
+            Association<User, NormalUser>.CreateAssociation(1, 0);
+            Association<User, UserAdministrator>.CreateAssociation(1, 0);
+
+            // Pobieram utworzone asociacje między obiektami i przypisuje je do zmiennych.
+            var normalUserAssociation = Association<User, NormalUser>.GetAssociation();
+            var administratorUserAssociation = Association<User, UserAdministrator>.GetAssociation();
+
+            // Tworzę Administratora
+            User admin = new User(administratorUserAssociation, normalUserAssociation);
+
+            // Wywołuje metodę dostępną tylko dla administratora
+            WriteColor(admin.HasIsUserLogged(administratorUserAssociation), ConsoleColor.DarkGreen);
+
+            // Następnie uzytkownik który był adminiem staje się zwykłym użytkownikiem zachowując swoje właściwości.
+            admin = new User(normalUserAssociation, administratorUserAssociation);
+
+            // Występuje bład gdyż użytkownik nie posiada metody pokazującej zalogowanych uzytkowników.
+            try
+            {
+                WriteColor(admin.HasIsUserLogged(administratorUserAssociation), ConsoleColor.Red);
+            }
+            catch (Exception ex)
+            {
+                WriteColor($"BLAD: {ex.Message}", ConsoleColor.Red);
+            }
 
             #endregion
 
-            Console.ReadLine();
 
+            Console.ReadLine();
         }
 
         private static ConsoleColor currentForeground = ConsoleColor.White;

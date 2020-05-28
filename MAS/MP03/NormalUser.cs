@@ -4,9 +4,10 @@ namespace MP03
 {
     public class NormalUser : User
     {
-        public NormalUser() :base()
-        {
 
+        protected internal NormalUser(User user) : base()
+        {
+            // Kopiowanie właściwości
         }
 
         public override void GetUserInfo(StreamWriter streamWriter)                     // Przesłonięcie metody
