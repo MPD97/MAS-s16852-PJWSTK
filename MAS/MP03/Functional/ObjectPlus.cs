@@ -1,4 +1,4 @@
-﻿using MP02.Functional;
+﻿using MP03.Functional;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
@@ -12,7 +12,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace MP02
+namespace MP03
 {
 
     public class ObjectPlus
