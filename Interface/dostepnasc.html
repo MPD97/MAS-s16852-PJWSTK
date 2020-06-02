@@ -36,98 +36,86 @@
 </head>
 <body class="text-center">
     <div class="col-md-6" style="margin: auto">
-        <h1 style="margin-top:50px">Lista urządzeń</h1>
+        <h1 style="margin-top:50px">Podzespół składowy</h1>
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>lp.</th>
-                    <th>Identyfikator</th>
-                    <th>Model</th>
-                    <th>Testowane</th>
-                    <th>Wynik testu</th>
-                    <th>Opcje</th>
+                    <th>Identyfikator międzynarodowy</th>
+                    <th>Ilośc sztuk</th>
+                    <th>Zamiennik</th>
+                    <th>Konieczność wymiany?</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td class="table-img">
+                    <td>
+                        Board Type WW94530
+                    </td>
+                    <td>
                         1
                     </td>
                     <td>
-                        EE3420FDGM-AH
+                        ❌
                     </td>
                     <td>
-                        M365
+                        <select class="browser-default custom-select">
+                            <option selected>Wybierz</option>
+                            <option value="1">Tak</option>
+                            <option value="2">Nie</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Module ABAB30W
+                    </td>
+                    <td>
+                        1
                     </td>
                     <td>
                         ❌
                     </td>
-                    <td>❔</td>
+
                     <td>
-                        <button type="button" class="btn btn-sm btn-block btn-primary">Testuj</button>
-                        <button type="button" class="btn btn-sm btn-block btn-warning">Pokaż więcej opcji</button>
+                        <select class="browser-default custom-select">
+                            <option selected>Wybierz</option>
+                            <option value="1">Tak</option>
+                            <option value="2">Nie</option>
+                        </select>
                     </td>
                 </tr>
                 <tr>
-                    <td class="table-img">
-                        2
+                    <td>
+                        Resistor R1
                     </td>
                     <td>
-                        DDAV932MFL-PP
-                    </td>
-                    <td>
-                        M365
-                    </td>
-                    <td>
-                        ❌
-                    </td>
-                    <td>❔</td>
-                    <td>
-                        <button type="button" class="btn btn-sm btn-block btn-primary">Testuj</button>
-                        <button type="button" class="btn btn-sm btn-block btn-warning">Pokaż więcej opcji</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="table-img">
                         3
                     </td>
                     <td>
-                        WWW11412AZ-00
-                    </td>
-                    <td>
-                        M365 PRO
-                    </td>
-                    <td>
-                        ✔
-                    </td>
-                    <td>✔</td>
-                    <td>
-                        <button type="button" class="btn btn-sm btn-block btn-secondary">Testuj</button>
-                        <button type="button" class="btn btn-sm btn-block btn-warning">Pokaż więcej opcji</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="table-img">
-                        4
-                    </td>
-                    <td>
-                        MPSAOV9A0A-AA
-                    </td>
-                    <td>
-                        City Bike
-                    </td>
-                    <td>
                         ❌
                     </td>
-                    <td>❔</td>
                     <td>
-                        <button type="button" class="btn btn-sm btn-block btn-primary">Testuj</button>
-                        <button type="button" class="btn btn-sm btn-block btn-warning">Pokaż więcej opcji</button>
+                        <select class="browser-default custom-select">
+                            <option selected>Wybierz</option>
+                            <option value="1">Tak</option>
+                            <option value="2">Nie</option>
+                        </select>
                     </td>
                 </tr>
             </tbody>
         </table>
-        <a href="#">Pokaż więcej</a>
+        <div style="margin-bottom: 25px">
+            <a href="#">Dodaj pozycję do wymiany</a>
+        </div>
+        <div>
+            <a href="#" class="btn btn-lg btn-info" style="display: inline-block">Sprawdz dostępność podzespołów do wymiany</a>
+        </div>
+        <hr />
+        <h2>Dostępność wsyzstkich podzespołów: TAK</h2>
+        <div style="margin-top: 50px;">
+            <a href="#" class="btn btn-lg btn-danger" style="margin-right: 150px">Usterka niemożliwa do naprawy</a>
+            <a href="#" class="btn btn-lg btn-success" style="margin-left:150px">Dokonaj naprawy i testuj urządzenie</a>
+        </div>
     </div>
 </body>
 </html>
