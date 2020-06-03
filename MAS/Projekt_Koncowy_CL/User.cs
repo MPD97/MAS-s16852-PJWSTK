@@ -31,7 +31,38 @@ namespace MP03
 
             AddNormalUser(admin, roleNameNormalUser);
         }
+        public void ChangeClassTo<T>(T destination, Association<User, UserAdministrator> roleNameAdministrator, Association<User, NormalUser> roleNameNormalUser) where T : User
+        {
+            if (destination.GetType() == this.GetType())
+            {
+                throw new Exception("Nie mozna zmienic klasy na ta samą klase");
+            }
 
+            if (destination is UserAdministrator)
+            {
+                NormalUser user = GetNormalUser(roleNameNormalUser);
+                if (user != null)
+                {
+                    RemoveNormalUser(user, roleNameNormalUser);
+                }
+
+                AddAdministrator(user, roleNameAdministrator);
+            }
+            else if (destination is NormalUser)
+            {
+                UserAdministrator admin = GetAdministrator(roleNameAdministrator);
+                if (admin != null)
+                {
+                    RemoveAdministrator(admin, roleNameAdministrator);
+                }
+
+                AddNormalUser(admin, roleNameNormalUser);
+            }
+            else
+            {
+                throw new NotImplementedException($"Zmiana klasy nie została zaimplementowana dla typu: {destination.GetType().Name}");
+            }
+        }
 
         private void AddAdministrator(NormalUser user, IAssociation roleName)
         {
@@ -69,7 +100,7 @@ namespace MP03
             RemovePart(roleName, user);
         }
 
-        private UserAdministrator GetAdministrator(IAssociation roleName)
+        public UserAdministrator GetAdministrator(IAssociation roleName)
         {
             if (roleName == null)
             {
@@ -92,7 +123,7 @@ namespace MP03
             }
         }
 
-        private NormalUser GetNormalUser(IAssociation roleName)
+        public NormalUser GetNormalUser(IAssociation roleName)
         {
             if (roleName == null)
             {
@@ -114,7 +145,7 @@ namespace MP03
                 return null;
             }
         }
-        public string HasIsUserLogged(Association<User,UserAdministrator> roleName)
+        public string HasIsUserLogged(Association<User,UserAdministrator> roleName, User user)
         {
             if (roleName == null)
             {
@@ -129,7 +160,7 @@ namespace MP03
                     throw new Exception("Obiekt nie jest UserAdministrator.");
                 }
 
-                return (obj[0] as UserAdministrator).IsUserLogged();
+                return (obj[0] as UserAdministrator).IsUserLogged(user);
             }
             catch (Exception ex)
             {

@@ -11,6 +11,10 @@ namespace MP03
 
         public string Model { get; set; }
 
+
+        public Tested Tested { get; set; }
+        public TestResult TestResult { get; set; }
+
         public Gauge Gauge { get; set; }
 
         public EndpointDevice(int identifier, DateTime dateOfProduction, string model, Gauge gauge) : base()
@@ -52,5 +56,15 @@ namespace MP03
 
         }
 
+    }
+    public enum TestResult
+    {
+        Negatywny = 0,
+        Pozytywny = 1
+    }
+    public enum Tested
+    {
+        Nie = 0,
+        Tak = 1
     }
 }

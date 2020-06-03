@@ -22,7 +22,9 @@ namespace MP03
         {
             streamWriter.WriteLine("Jestem Administratorem");
         }
-        public string IsUserLogged()                   // Przesłonięcie metody
+
+        //TODO: Zrobić aby sprawdzało
+        public string IsUserLogged(User user)                   // Przesłonięcie metody
         {
             return $"Uzytkownik {(new Random().NextDouble() > 0.5 ? "jest" : "nie jest")} zalogowany.";
         }

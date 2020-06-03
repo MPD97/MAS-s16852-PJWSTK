@@ -16,11 +16,11 @@ namespace MP03
             Storage = storage;
         }
 
-        public ServerCluster CreateAndAddPart<X, Y>(Association<X, Y> association, string mac) where X : ObjectPlusPlus where Y : ObjectPlusPlus
+        public ServerVM CreateAndAddPart<X, Y>(Association<X, Y> association, string mac) where X : ObjectPlusPlus where Y : ObjectPlusPlus
         {
-            return AddPart(association, new ServerCluster(mac));
+            return AddPart(association, new ServerVM(mac));
         }
-        public ServerCluster CreateAndAddPart<X, Y>(Association<X, Y> association, ServerCluster existingCluster) where X : ObjectPlusPlus where Y : ObjectPlusPlus
+        public ServerVM CreateAndAddPart<X, Y>(Association<X, Y> association, ServerVM existingCluster) where X : ObjectPlusPlus where Y : ObjectPlusPlus
         {
             if (existingCluster == null)
             {

@@ -16,9 +16,9 @@ namespace MP02
             Storage = storage;
         }
 
-        public ServerCluster CreateAndAddPart<X, Y>(Association<X, Y> association, string mac) where X : ObjectPlusPlus where Y : ObjectPlusPlus
+        public ServerCluster CreateAndAddPart<X, Y>(Association<X, Y> association, string virtualMAC) where X : ObjectPlusPlus where Y : ObjectPlusPlus
         {
-            return AddPart(association, new ServerCluster(mac));
+            return AddPart(association, new ServerCluster(virtualMAC));
         }
         public ServerCluster CreateAndAddPart<X, Y>(Association<X, Y> association, ServerCluster existingCluster) where X : ObjectPlusPlus where Y : ObjectPlusPlus
         {
