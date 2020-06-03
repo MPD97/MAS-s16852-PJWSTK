@@ -6,8 +6,7 @@ using System.Text;
 
 namespace MP03
 {
-    public abstract class Person : ObjectPlusPlus
+    public class Person : ObjectPlusPlus
     {
-        public abstract void GetPersonInfo(StreamWriter sw);
     }
 }
