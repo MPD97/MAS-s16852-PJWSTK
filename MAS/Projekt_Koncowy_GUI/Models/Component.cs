@@ -13,11 +13,12 @@ namespace Projekt_Koncowy_GUI.Models
         public string Identifier { get; set; }
         
         [InverseProperty("Base")]
-        public virtual ICollection<Replacement> Base { get; set; }
+        public virtual ICollection<Replacement> Bases { get; set; }
 
         [InverseProperty("ReplacedBy")]
-        public virtual ICollection<Replacement> ReplacedBy { get; set; }
+        public virtual ICollection<Replacement> ReplacedBys { get; set; }
 
+        public virtual ICollection<Equipment> Equipments { get; set; }
 
         public Component(string identifier) 
         {
