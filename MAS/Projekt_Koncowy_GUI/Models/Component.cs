@@ -10,7 +10,7 @@ namespace Projekt_Koncowy_GUI.Models
     public class Component 
     {
         [Key]
-        public Guid Identifier { get; set; }
+        public string Identifier { get; set; }
         
         [InverseProperty("Base")]
         public virtual ICollection<Replacement> Base { get; set; }
@@ -19,8 +19,7 @@ namespace Projekt_Koncowy_GUI.Models
         public virtual ICollection<Replacement> ReplacedBy { get; set; }
 
 
-
-        public Component(Guid identifier) 
+        public Component(string identifier) 
         {
             Identifier = identifier;
         }
@@ -32,10 +31,10 @@ namespace Projekt_Koncowy_GUI.Models
     }
     public class Replacement
     {
-        public Guid ReplacementId { get; set; }
+        public string ReplacementId { get; set; }
 
-        public Guid BaseId { get; set; }
-        public Guid ReplacedById { get; set; }
+        public string BaseId { get; set; }
+        public string ReplacedById { get; set; }
 
         [ForeignKey("BaseId")]
         public Component Base { get; set; }
