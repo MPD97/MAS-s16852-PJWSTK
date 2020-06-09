@@ -45,11 +45,21 @@
     </tbody>
 </table>
 <hr />
+<div style="display: flex;">
+    <a href="#" id="CheckBtn" class="btn btn-lg btn-info" style="display: inline-block">Sprawdz dostępność podzespołów do wymiany</a>
+</div>
+
+<div id="ResultDiv" class="hidden" style="display: flex;">
+    <a href="#" class="btn btn-lg btn-info" style="display: inline-block; margin: auto;">Sprawdz dostępność podzespołów do wymiany</a>
+</div>
 
 <div>
     <a asp-action="Index">Powrót do listy urządzeń</a>
 </div>
 
+<script>
+
+</script>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

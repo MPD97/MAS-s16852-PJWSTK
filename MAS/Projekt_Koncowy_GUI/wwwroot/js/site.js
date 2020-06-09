@@ -2,3 +2,21 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+var btn = document.getElementById("CheckBtn");
+btn.onclick = function () {
+
+    var selectors = document.querySelectorAll("select");
+
+    selectors.forEach(element => {
+        if (element.selectedIndex === 0) {
+            alert("Wybierz opcję Koniecznosć wymiany!");
+            return;
+        }
+    });
+
+    selectors.forEach(element => {
+        if (element.selectedIndex === 1) {
+
+        }
+    });
+};
