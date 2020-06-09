@@ -27,6 +27,7 @@ namespace Projekt_Koncowy_GUI.Models
         {
 
         }
+
         public EndpointDevice(int identifier, DateTime dateOfProduction, string model, Gauge gauge) : base()
         {
             Identifier = identifier;

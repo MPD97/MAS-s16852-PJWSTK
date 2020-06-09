@@ -50,7 +50,7 @@ namespace Projekt_Koncowy_GUI
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=EndpointDevice}/{action=Index}/{id?}");
             });
         }
     }

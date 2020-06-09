@@ -23,6 +23,71 @@ namespace Projekt_Koncowy_GUI.Controllers
         {
             return View(await _context.EndpointDevices.ToListAsync());
         }
+        public async Task<IActionResult> Test(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var endpointDevice = await _context.EndpointDevices
+             .FirstOrDefaultAsync(m => m.Identifier == id);
+            if (endpointDevice == null)
+            {
+                return NotFound();
+            }
+
+            endpointDevice.Tested = Tested.Tak;
+            endpointDevice.TestResult = TestResult.Negatywny;
+
+            if (await _context.SaveChangesAsync() > 0)
+            {
+                return RedirectToAction("Index");
+            }
+
+            return BadRequest("Coś poszło nie tak.");
+        }
+        public async Task<IActionResult> TestSucceed(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var endpointDevice = await _context.EndpointDevices
+             .FirstOrDefaultAsync(m => m.Identifier == id);
+            if (endpointDevice == null)
+            {
+                return NotFound();
+            }
+
+            endpointDevice.Tested = Tested.Tak;
+            endpointDevice.TestResult = TestResult.Pozytywny;
+
+            if ( await _context.SaveChangesAsync() > 0)
+            {
+                return RedirectToAction("Index");
+            }
+
+            return BadRequest("Coś poszło nie tak.");
+        }
+
+        public async Task<IActionResult> TestFailed(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var endpointDevice = await _context.EndpointDevices
+             .FirstOrDefaultAsync(m => m.Identifier == id);
+            if (endpointDevice == null)
+            {
+                return NotFound();
+            }
+
+            return View(endpointDevice);
+        }
 
         // GET: EndpointDevice/Details/5
         public async Task<IActionResult> Details(int? id)

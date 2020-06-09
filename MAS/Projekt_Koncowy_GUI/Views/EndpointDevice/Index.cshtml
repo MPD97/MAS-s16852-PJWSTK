@@ -79,9 +79,10 @@
                     </td>
 
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.Identifier">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.Identifier">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Identifier">Delete</a>
+                        <a class="btn btn-sm btn-block btn-primary" asp-action="Test" asp-route-id="@item.Identifier">Testuj</a>
+                        <a class="btn btn-sm btn-block btn-success" asp-action="Edit" asp-route-id="@item.Identifier">Edytuj</a>
+                        <a class="btn btn-sm btn-block btn-info" asp-action="Details" asp-route-id="@item.Identifier">Szczegóły</a>
+                        <a class="btn btn-sm btn-block btn-danger" asp-action="Delete" asp-route-id="@item.Identifier">Usuń</a>
                     </td>
                 </tr>
             }
