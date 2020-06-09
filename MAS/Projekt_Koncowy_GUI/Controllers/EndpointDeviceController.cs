@@ -61,7 +61,7 @@ namespace Projekt_Koncowy_GUI.Controllers
 
             if ( await _context.SaveChangesAsync() > 0)
             {
-                return RedirectToAction("Index", new RouteValueDictionary( new { action = "Main", id = Identifier }));
+                return RedirectToAction("Index", new RouteValueDictionary( new { action = "Index", id = Identifier }));
             }
 
             return BadRequest("Coś poszło nie tak.");
@@ -87,12 +87,12 @@ namespace Projekt_Koncowy_GUI.Controllers
 
             if (await _context.SaveChangesAsync() > 0)
             {
-                return RedirectToAction("Index", new RouteValueDictionary(new { action = "Main", id = Identifier }));
+                return RedirectToAction("Repair", new RouteValueDictionary(new { action = "Repair", id = Identifier }));
             }
 
             return BadRequest("Coś poszło nie tak.");
         }
-
+        [HttpGet]
         public async Task<IActionResult> Repair(int? id)
         {
             if (id == null)
@@ -106,8 +106,20 @@ namespace Projekt_Koncowy_GUI.Controllers
             {
                 return NotFound();
             }
+            List<ComponentAvailableModel> modelResult = new List<ComponentAvailableModel>();
+            var equipmnet = await _context.Equipments.Where(eq => eq.EndpointDeviceId == endpointDevice.Identifier).ToListAsync();
 
-            return View(endpointDevice);
+            var components = await _context.Components.Where(comp => equipmnet.Any(eq => eq.ComponentId == comp.Identifier)).ToArrayAsync();
+
+            foreach(var component in components)
+            {
+                ComponentAvailableModel model = new ComponentAvailableModel();
+                model.ComponentIdentificator = component.Identifier;
+                model.DeviceId = endpointDevice.Identifier;
+                model.HasReplacement = await _context.Replacements.AnyAsync(re => re.ReplacedById == component.Identifier);
+                model.Amount = (await _context.Equipments.FirstOrDefaultAsync(eq => eq.EndpointDeviceId == endpointDevice.Identifier && eq.ComponentId == component.Identifier)).Amount;
+            }
+            return View(component);
         }
 
 
