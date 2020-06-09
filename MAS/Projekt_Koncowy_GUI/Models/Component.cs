@@ -11,7 +11,10 @@ namespace Projekt_Koncowy_GUI.Models
     {
         [Key]
         public string Identifier { get; set; }
-        
+
+        public int AvailableAmount { get; set; }
+
+
         [InverseProperty("Base")]
         public virtual ICollection<Replacement> Bases { get; set; }
 
@@ -29,18 +32,5 @@ namespace Projekt_Koncowy_GUI.Models
         {
             throw new NotImplementedException();
         }
-    }
-    public class Replacement
-    {
-        public string ReplacementId { get; set; }
-
-        public string BaseId { get; set; }
-        public string ReplacedById { get; set; }
-
-        [ForeignKey("BaseId")]
-        public Component Base { get; set; }
-
-        [ForeignKey("ReplacedById")]
-        public Component ReplacedBy { get; set; }
     }
 }
