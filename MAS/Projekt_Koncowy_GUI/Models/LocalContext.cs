@@ -15,11 +15,6 @@ namespace Projekt_Koncowy_GUI.Models
         DbSet<Component> Components { get; set; }
         DbSet<Replacement> Replacements { get; set; }
 
-
-
-        DbSet<EndpointDevice> EndpointDevices { get; set; }
-        DbSet<EndpointDevice> EndpointDevices { get; set; }
-
         public LocalContext([NotNullAttribute] DbContextOptions options) : base(options)
         {
         }
