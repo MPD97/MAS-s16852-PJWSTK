@@ -1,4 +1,4 @@
-﻿@model Projekt_Koncowy_GUI.Models.EndpointDevice
+﻿@model IEnumerable<Projekt_Koncowy_GUI.Models.ComponentAvailableModel>
 
 @{
     ViewData["Title"] = "Sprawdz dostępność";
@@ -8,92 +8,43 @@
     <thead>
         <tr>
             <th>Identyfikator miedzynarodowy</th>
-            <th>Wymagana ilość sztuk</th>
-            <th>Zamiennik</th>
+            <th>Ilość sztuk do wymiany</th>
+            <th>Posiada zamiennik</th>
             <th>Konieczność wymiany</th>
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => Model.Identifier)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => Model.DateOfProduction)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => Model.Model)
-            </td>
-            <td>
-                @if (Model.Gauge == Gauge.P)
-                {
-                    @("P");
-                }
-                else if (Model.Gauge == Gauge.X1)
-                {
-                    @("X1");
-                }
-                else if (Model.Gauge == Gauge.X2)
-                {
-                    @("X2");
-                }
-            </td>
-            <td>
-                @if (Model.Tested == Tested.Tak)
-                {
-                    @("✔");
-                }
-                else
-                {
-                    @("❌");
-                }
-            </td>
-            <td>
-                @if (Model.TestResult == TestResult.Pozytywny && Model.Tested == Tested.Tak)
-                {
-                    @("✔");
-                }
-                else if (Model.TestResult == TestResult.Negatywny && Model.Tested == Tested.Tak)
-                {
-                    @("❌");
-                }
-                else
-                {
-                    @("❔");
-                }
-            </td>
-        </tr>
+        @foreach (var mod in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => mod.ComponentIdentificator)
+                </td>
+                <td>
+                    @Html.EditorFor(modelItem => mod.Amount, new { htmlAttributes = new { type = "number", min = "0", max = mod.Amount, @class = "form-control" } })
+                </td>
+                <td>
+                    @if (mod.HasReplacement)
+                    {
+                        @("✔");
+                    }
+                    else
+                    {
+                        @("❌");
+                    }
+                </td>
+                <td>
+                    <select class="browser-default custom-select">
+                        <option selected="">Wybierz</option>
+                        <option value="1">Tak</option>
+                        <option value="2">Nie</option>
+                    </select>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
 <hr />
-<main role="main" class="inner cover" style="text-align: center;">
-    <h1 class="cover-heading" style="margin-top: 50px;">Procedura testowa na podstawie dokumentacji v.1.2.xxx</h1>
-    <p class="lead">1. Dioda urządzenia świeci się po podłączeniu do źródła zasilania.</p>
-    <p class="lead">2. Po podłączeniu do konsoli, na ekranie pojawiają się komunikaty.</p>
-    <p class="lead">3. Urządzenie poprawnie zarejestrowało się w aplikacji serwerowej.</p>
-    <p class="lead">...</p>
-    <p class="lead">13. Nie wykryto wad wizualnych produktu.</p>
-    <div class="row" style="margin-top: 50px;">
-        <div class="col-md-6">
-            <form asp-action="TestFailed">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" asp-for="Identifier" />
-                <div class="form-group" style="display: flex; margin: auto;">
-                    <input type="submit" value="Stwierdzono usterkę" class="btn btn-lg btn-danger" style="margin:auto;" />
-                </div>
-            </form>
-        </div>
-        <div class="col-md-6">
-            <form asp-action="TestSucceed">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" asp-for="Identifier" />
-                <div class="form-group" style="display: flex; margin: auto;">
-                    <input type="submit" value="Urządzenie działa prawidłowo" class="btn btn-lg btn-success" style="margin:auto;" />
-                </div>
-            </form>
-        </div>
-    </div>
-</main>
 
 <div>
     <a asp-action="Index">Powrót do listy urządzeń</a>

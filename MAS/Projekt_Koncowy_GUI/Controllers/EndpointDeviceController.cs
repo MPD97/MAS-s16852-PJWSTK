@@ -59,9 +59,9 @@ namespace Projekt_Koncowy_GUI.Controllers
             endpointDevice.Tested = Tested.Tak;
             endpointDevice.TestResult = TestResult.Pozytywny;
 
-            if ( await _context.SaveChangesAsync() > 0)
+            if (await _context.SaveChangesAsync() > 0)
             {
-                return RedirectToAction("Index", new RouteValueDictionary( new { action = "Index", id = Identifier }));
+                return RedirectToAction("Index", new RouteValueDictionary(new { action = "Index", id = Identifier }));
             }
 
             return BadRequest("Coś poszło nie tak.");
@@ -107,19 +107,21 @@ namespace Projekt_Koncowy_GUI.Controllers
                 return NotFound();
             }
             List<ComponentAvailableModel> modelResult = new List<ComponentAvailableModel>();
-            var equipmnet = await _context.Equipments.Where(eq => eq.EndpointDeviceId == endpointDevice.Identifier).ToListAsync();
+            var equipmnet = _context.Equipments.Where(eq => eq.EndpointDeviceId == endpointDevice.Identifier);
 
-            var components = await _context.Components.Where(comp => equipmnet.Any(eq => eq.ComponentId == comp.Identifier)).ToArrayAsync();
+            var components = await _context.Components.Where(comp => equipmnet.Any(eq => eq.ComponentId == comp.Identifier) == true).ToListAsync();
 
-            foreach(var component in components)
+            foreach (var component in components)
             {
                 ComponentAvailableModel model = new ComponentAvailableModel();
                 model.ComponentIdentificator = component.Identifier;
                 model.DeviceId = endpointDevice.Identifier;
                 model.HasReplacement = await _context.Replacements.AnyAsync(re => re.ReplacedById == component.Identifier);
                 model.Amount = (await _context.Equipments.FirstOrDefaultAsync(eq => eq.EndpointDeviceId == endpointDevice.Identifier && eq.ComponentId == component.Identifier)).Amount;
+
+                modelResult.Add(model);
             }
-            return View(component);
+            return View(modelResult);
         }
 
 
