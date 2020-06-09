@@ -79,7 +79,15 @@
                     </td>
 
                     <td>
-                        <a class="btn btn-sm btn-block btn-primary" asp-action="Test" asp-route-id="@item.Identifier">Testuj</a>
+                        @if (item.TestResult == TestResult.Negatywny && item.Tested == Tested.Tak)
+                        {
+                            <a class="btn btn-sm btn-block btn-primary" asp-action="Repair" asp-route-id="@item.Identifier">Napraw</a>
+                        }
+
+                        @if (item.TestResult != TestResult.Pozytywny && item.Tested != Tested.Tak)
+                        {
+                            <a class="btn btn-sm btn-block btn-primary" asp-action="Test" asp-route-id="@item.Identifier">Testuj</a>
+                        }
                         <a class="btn btn-sm btn-block btn-success" asp-action="Edit" asp-route-id="@item.Identifier">Edytuj</a>
                         <a class="btn btn-sm btn-block btn-info" asp-action="Details" asp-route-id="@item.Identifier">Szczegóły</a>
                         <a class="btn btn-sm btn-block btn-danger" asp-action="Delete" asp-route-id="@item.Identifier">Usuń</a>

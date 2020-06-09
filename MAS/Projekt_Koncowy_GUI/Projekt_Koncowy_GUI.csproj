@@ -1,8 +1,21 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20200609073529_InitialEmpty.cs" />
+    <Compile Remove="Migrations\20200609073529_InitialEmpty.Designer.cs" />
+    <Compile Remove="Migrations\20200609074805_AddedAvailableAmount.cs" />
+    <Compile Remove="Migrations\20200609074805_AddedAvailableAmount.Designer.cs" />
+    <Compile Remove="Migrations\20200609102913_AddEquipmentFKs.cs" />
+    <Compile Remove="Migrations\20200609102913_AddEquipmentFKs.Designer.cs" />
+    <Compile Remove="Migrations\20200609103213_fixMigrations.cs" />
+    <Compile Remove="Migrations\20200609103213_fixMigrations.Designer.cs" />
+    <Compile Remove="Migrations\20200609103423_FixingMigration.cs" />
+    <Compile Remove="Migrations\20200609103423_FixingMigration.Designer.cs" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.4" />

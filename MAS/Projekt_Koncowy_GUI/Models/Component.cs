@@ -23,6 +23,10 @@ namespace Projekt_Koncowy_GUI.Models
 
         public virtual ICollection<Equipment> Equipments { get; set; }
 
+
+        public Component()
+        {
+        }
         public Component(string identifier) 
         {
             Identifier = identifier;

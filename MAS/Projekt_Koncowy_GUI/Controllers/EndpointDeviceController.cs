@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Projekt_Koncowy_GUI.Models;
 
@@ -37,25 +38,19 @@ namespace Projekt_Koncowy_GUI.Controllers
                 return NotFound();
             }
 
-            endpointDevice.Tested = Tested.Tak;
-            endpointDevice.TestResult = TestResult.Negatywny;
-
-            if (await _context.SaveChangesAsync() > 0)
-            {
-                return RedirectToAction("Index");
-            }
-
-            return BadRequest("Coś poszło nie tak.");
+            return View(endpointDevice);
         }
-        public async Task<IActionResult> TestSucceed(int? id)
+
+        [HttpPost]
+        public async Task<IActionResult> TestSucceed(int Identifier)
         {
-            if (id == null)
+            if (Identifier == null)
             {
                 return NotFound();
             }
 
             var endpointDevice = await _context.EndpointDevices
-             .FirstOrDefaultAsync(m => m.Identifier == id);
+             .FirstOrDefaultAsync(m => m.Identifier == Identifier);
             if (endpointDevice == null)
             {
                 return NotFound();
@@ -66,13 +61,39 @@ namespace Projekt_Koncowy_GUI.Controllers
 
             if ( await _context.SaveChangesAsync() > 0)
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new RouteValueDictionary( new { action = "Main", id = Identifier }));
             }
 
             return BadRequest("Coś poszło nie tak.");
         }
 
-        public async Task<IActionResult> TestFailed(int? id)
+        [HttpPost]
+        public async Task<IActionResult> TestFailed(int Identifier)
+        {
+            if (Identifier == null)
+            {
+                return NotFound();
+            }
+
+            var endpointDevice = await _context.EndpointDevices
+             .FirstOrDefaultAsync(m => m.Identifier == Identifier);
+            if (endpointDevice == null)
+            {
+                return NotFound();
+            }
+
+            endpointDevice.Tested = Tested.Tak;
+            endpointDevice.TestResult = TestResult.Negatywny;
+
+            if (await _context.SaveChangesAsync() > 0)
+            {
+                return RedirectToAction("Index", new RouteValueDictionary(new { action = "Main", id = Identifier }));
+            }
+
+            return BadRequest("Coś poszło nie tak.");
+        }
+
+        public async Task<IActionResult> Repair(int? id)
         {
             if (id == null)
             {
@@ -88,6 +109,8 @@ namespace Projekt_Koncowy_GUI.Controllers
 
             return View(endpointDevice);
         }
+
+
 
         // GET: EndpointDevice/Details/5
         public async Task<IActionResult> Details(int? id)

@@ -9,7 +9,6 @@ namespace Projekt_Koncowy_GUI.Models
     public class EndpointDevice
     {
 
-        [Key]
         public int Identifier { get; set; }
 
         public DateTime DateOfProduction { get; set; }

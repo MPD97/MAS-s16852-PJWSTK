@@ -30,6 +30,23 @@ namespace Projekt_Koncowy_GUI.Migrations
                     b.HasKey("Identifier");
 
                     b.ToTable("Components");
+
+                    b.HasData(
+                        new
+                        {
+                            Identifier = "AAA-BBB-123",
+                            AvailableAmount = 50
+                        },
+                        new
+                        {
+                            Identifier = "356-RRR-QAZ",
+                            AvailableAmount = 10
+                        },
+                        new
+                        {
+                            Identifier = "MMM-005-550",
+                            AvailableAmount = 3
+                        });
                 });
 
             modelBuilder.Entity("Projekt_Koncowy_GUI.Models.EndpointDevice", b =>
@@ -57,6 +74,26 @@ namespace Projekt_Koncowy_GUI.Migrations
                     b.HasKey("Identifier");
 
                     b.ToTable("EndpointDevices");
+
+                    b.HasData(
+                        new
+                        {
+                            Identifier = 10,
+                            DateOfProduction = new DateTime(2020, 3, 11, 12, 38, 1, 562, DateTimeKind.Local).AddTicks(8929),
+                            Gauge = 2,
+                            Model = "Speed 500w",
+                            TestResult = 0,
+                            Tested = 0
+                        },
+                        new
+                        {
+                            Identifier = 15,
+                            DateOfProduction = new DateTime(2020, 4, 10, 12, 38, 1, 566, DateTimeKind.Local).AddTicks(2214),
+                            Gauge = 2,
+                            Model = "Ride Fast 200W",
+                            TestResult = 0,
+                            Tested = 0
+                        });
                 });
 
             modelBuilder.Entity("Projekt_Koncowy_GUI.Models.Equipment", b =>
@@ -66,19 +103,52 @@ namespace Projekt_Koncowy_GUI.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ComponentIdentifier")
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ComponentId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int?>("EndpointDeviceIdentifier")
+                    b.Property<int>("EndpointDeviceId")
                         .HasColumnType("int");
 
                     b.HasKey("EquipmentId");
 
-                    b.HasIndex("ComponentIdentifier");
+                    b.HasIndex("ComponentId");
 
-                    b.HasIndex("EndpointDeviceIdentifier");
+                    b.HasIndex("EndpointDeviceId");
 
                     b.ToTable("Equipments");
+
+                    b.HasData(
+                        new
+                        {
+                            EquipmentId = 1,
+                            Amount = 5,
+                            ComponentId = "356-RRR-QAZ",
+                            EndpointDeviceId = 10
+                        },
+                        new
+                        {
+                            EquipmentId = 2,
+                            Amount = 4,
+                            ComponentId = "MMM-005-550",
+                            EndpointDeviceId = 10
+                        },
+                        new
+                        {
+                            EquipmentId = 3,
+                            Amount = 1,
+                            ComponentId = "MMM-005-550",
+                            EndpointDeviceId = 15
+                        },
+                        new
+                        {
+                            EquipmentId = 4,
+                            Amount = 6,
+                            ComponentId = "AAA-BBB-123",
+                            EndpointDeviceId = 15
+                        });
                 });
 
             modelBuilder.Entity("Projekt_Koncowy_GUI.Models.Replacement", b =>
@@ -99,17 +169,27 @@ namespace Projekt_Koncowy_GUI.Migrations
                     b.HasIndex("ReplacedById");
 
                     b.ToTable("Replacements");
+
+                    b.HasData(
+                        new
+                        {
+                            ReplacementId = "REPLACEMENT-ABC123",
+                            BaseId = "MMM-005-550",
+                            ReplacedById = "AAA-BBB-123"
+                        });
                 });
 
             modelBuilder.Entity("Projekt_Koncowy_GUI.Models.Equipment", b =>
                 {
                     b.HasOne("Projekt_Koncowy_GUI.Models.Component", "Component")
                         .WithMany("Equipments")
-                        .HasForeignKey("ComponentIdentifier");
+                        .HasForeignKey("ComponentId");
 
                     b.HasOne("Projekt_Koncowy_GUI.Models.EndpointDevice", "EndpointDevice")
                         .WithMany("Equipments")
-                        .HasForeignKey("EndpointDeviceIdentifier");
+                        .HasForeignKey("EndpointDeviceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Projekt_Koncowy_GUI.Models.Replacement", b =>
