@@ -1,0 +1,90 @@
+﻿@model IEnumerable<Projekt_Koncowy_GUI.Models.EndpointDevice>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Lista urządzeń</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+        <tr>
+            <th>lp.</th>
+            <th>Identyfikator</th>
+            <th>Data Produkcji</th>
+            <th>Model</th>
+            <th>Gabaryt</th>
+            <th>Testowane</th>
+            <th>Wynik testu</th>
+            <th>Opcje</th>
+        </tr>
+        </tr>
+    </thead>
+    <tbody>
+        @{  int a = 0;
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@{a++; @(a)}</td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Identifier)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateOfProduction)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Model)
+                    </td>
+                    <td>
+                        @if (item.Gauge == Gauge.P)
+                        {
+                            @("P");
+                        }
+                        else if (item.Gauge == Gauge.X1)
+                        {
+                            @("X1");
+                        }
+                        else if (item.Gauge == Gauge.X2)
+                        {
+                            @("X2");
+                        }
+                    </td>
+                    <td>
+                        @if (item.Tested == Tested.Tak)
+                        {
+                            @("✔");
+                        }
+                        else
+                        {
+                            @("❌");
+                        }
+                    </td>
+                    <td>
+                        @if (item.TestResult == TestResult.Pozytywny && item.Tested == Tested.Tak)
+                        {
+                            @("✔");
+                        }
+                        else if (item.TestResult == TestResult.Negatywny && item.Tested == Tested.Tak)
+                        {
+                            @("❌");
+                        }
+                        else
+                        {
+                            @("❔");
+                        }
+                    </td>
+
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Identifier">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Identifier">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Identifier">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

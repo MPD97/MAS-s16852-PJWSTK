@@ -10,10 +10,10 @@ namespace Projekt_Koncowy_GUI.Models
     public class LocalContext : DbContext
     {
 
-        DbSet<EndpointDevice> EndpointDevices { get; set; }
-        DbSet<Equipment> Equipments { get; set; }
-        DbSet<Component> Components { get; set; }
-        DbSet<Replacement> Replacements { get; set; }
+        public DbSet<EndpointDevice> EndpointDevices { get; set; }
+        public DbSet<Equipment> Equipments { get; set; }
+        public DbSet<Component> Components { get; set; }
+        public DbSet<Replacement> Replacements { get; set; }
 
         public LocalContext([NotNullAttribute] DbContextOptions options) : base(options)
         {

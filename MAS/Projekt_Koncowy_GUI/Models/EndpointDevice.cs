@@ -23,7 +23,10 @@ namespace Projekt_Koncowy_GUI.Models
 
         public virtual ICollection<Equipment> Equipments { get; set; }
 
+        public EndpointDevice()
+        {
 
+        }
         public EndpointDevice(int identifier, DateTime dateOfProduction, string model, Gauge gauge) : base()
         {
             Identifier = identifier;

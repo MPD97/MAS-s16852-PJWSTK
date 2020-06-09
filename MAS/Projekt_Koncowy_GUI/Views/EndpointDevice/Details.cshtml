@@ -1,0 +1,48 @@
+﻿@model Projekt_Koncowy_GUI.Models.EndpointDevice
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>EndpointDevice</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DateOfProduction)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DateOfProduction)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Model)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Model)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Tested)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Tested)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TestResult)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TestResult)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Gauge)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Gauge)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Identifier">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
