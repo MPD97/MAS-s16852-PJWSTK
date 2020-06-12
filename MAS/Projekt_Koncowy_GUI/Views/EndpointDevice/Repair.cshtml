@@ -17,9 +17,11 @@
         @foreach (var mod in Model)
         {
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => mod.ComponentIdentificator)
-                </td>
+				<td>
+					@Html.HiddenFor(modelItem => mod.DeviceId, new { id = "id" } )
+
+					@Html.DisplayFor(modelItem => mod.ComponentIdentificator)
+				</td>
                 <td>
                     @Html.EditorFor(modelItem => mod.Amount, new { htmlAttributes = new { type = "number", min = "0", max = mod.Amount, @class = "form-control" } })
                 </td>
@@ -50,7 +52,7 @@
 </div>
 <hr style="margin-top:50px;"/>
 <div id="ResultDiv" class="hidden" style="display: flex;">
-    <a href="#" class="btn btn-lg btn-success" style="display: inline-block; margin: auto;">Przeprowadź naprawę</a>
+    <a href="#" id="RepairBtn" class="btn btn-lg btn-success" style="display: inline-block; margin: auto;">Przeprowadź naprawę</a>
 </div>
 
 <div>

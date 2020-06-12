@@ -123,7 +123,47 @@ namespace Projekt_Koncowy_GUI.Controllers
             }
             return View(modelResult);
         }
+        [HttpPost]
+        public async Task<IActionResult> Repair(RepairModel model)
+        {
+            var endpointDevice = await _context.EndpointDevices
+             .FirstOrDefaultAsync(m => m.Identifier == model.DeviceId);
 
+            if (endpointDevice == null)
+            {
+                return NotFound("Nie znaleziono urządzenia końcowego");
+            }
+            if (endpointDevice.TestResult == TestResult.Pozytywny)
+            {
+                return BadRequest("Urządzenie końcowe zawiera pozytywny wynik testu");
+            }
+            endpointDevice.TestResult = TestResult.Pozytywny;
+            _context.Entry(endpointDevice).State = EntityState.Modified;
+
+            foreach (var component in model.ComponentModels)
+            {
+                var foundComponent = await _context.Components.FirstOrDefaultAsync(com =>
+                    com.Identifier == component.ComponentIdentificator);
+                if (foundComponent == null)
+                {
+                    return BadRequest("Nie znaleziono komponentu");
+                }
+                if(foundComponent.AvailableAmount < component.Amount)
+                {
+                    return BadRequest("Brak wystarczającej ilości dostepnych komponentów");
+                }
+                foundComponent.AvailableAmount -= component.Amount;
+
+                _context.Entry(foundComponent).State = EntityState.Modified;
+            }
+
+            if ((await _context.SaveChangesAsync()) >= 0)
+            {
+                return Ok();
+            }
+            return StatusCode(500);
+
+        }
 
 
         // GET: EndpointDevice/Details/5

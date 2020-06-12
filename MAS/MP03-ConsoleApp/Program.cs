@@ -115,7 +115,7 @@ namespace MP03_ConsoleApp
 
             #region Dynamic
 
-            // Implementacja dziedziczenia dynamicznego z użyciem kompozycji i construktora kopiującego
+            // Implementacja dziedziczenia dynamicznego z użyciem kompozycji i konstruktora kopiującego
 
             // Tworzę potrzebne asocjacje między klasami
             // W tym przykładzie całościa jest klasa User, a częsciami, między którymi zachodzi dziedziczenie dynamiczne, NormalUser oraz UserAdministrator.

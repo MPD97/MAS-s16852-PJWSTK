@@ -105,6 +105,7 @@ namespace Projekt_Koncowy_GUI.Models
                 ComponentId = "AAA-BBB-123",
                 Amount = 6,
             });
+            
         }
     }
 }
