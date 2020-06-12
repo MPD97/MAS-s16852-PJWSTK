@@ -1,0 +1,51 @@
+﻿@model Projekt_Koncowy_GUI.Models.EndpointDevice
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Usuwanie</h1>
+
+<h3>Czy na pewno chcesz usunąć?</h3>
+<div>
+    <h4>Urządzenie końcowe</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DateOfProduction)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DateOfProduction)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Model)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Model)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Tested)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Tested)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TestResult)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TestResult)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Gauge)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Gauge)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Identifier" />
+        <input type="submit" value="Usuń" class="btn btn-danger" /> |
+        <a asp-action="Index">Powrót</a>
+    </form>
+</div>

@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Projekt_Koncowy_GUI.Models.ComponentAvailableModel>
+
+@{
+    ViewData["Title"] = "Sprawdz dostępność";
+}
+<h1>Podzespoły składowe danego urządzenia</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Identyfikator miedzynarodowy</th>
+            <th>Ilość sztuk do wymiany</th>
+            <th>Posiada zamiennik</th>
+            <th>Konieczność wymiany</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var mod in Model)
+        {
+            <tr>
+				<td>
+					@Html.HiddenFor(modelItem => mod.DeviceId, new { id = "id" } )
+
+					@Html.DisplayFor(modelItem => mod.ComponentIdentificator)
+				</td>
+                <td>
+                    @Html.EditorFor(modelItem => mod.Amount, new { htmlAttributes = new { type = "number", min = "0", max = mod.Amount, @class = "form-control" } })
+                </td>
+                <td>
+                    @if (mod.HasReplacement)
+                    {
+                        @("✔");
+                    }
+                    else
+                    {
+                        @("❌");
+                    }
+                </td>
+                <td>
+                    <select class="browser-default custom-select">
+                        <option selected="">Wybierz</option>
+                        <option value="1">Tak</option>
+                        <option value="2">Nie</option>
+                    </select>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<hr />
+<div style="display: flex;">
+    <a href="#" id="CheckBtn" class="btn btn-lg btn-info" style="display: inline-block; margin: auto;">Sprawdz dostępność podzespołów do wymiany</a>
+</div>
+<hr style="margin-top:50px;"/>
+<div id="ResultDiv" class="hidden" style="display: flex;">
+    <a href="#" id="RepairBtn" class="btn btn-lg btn-success" style="display: inline-block; margin: auto;">Przeprowadź naprawę</a>
+</div>
+
+<div>
+    <a asp-action="Index">Powrót do listy urządzeń</a>
+</div>
+
+<script>
+
+</script>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

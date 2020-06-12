@@ -4,9 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Projekt_Koncowy_GUI.Models;
 
 namespace Projekt_Koncowy_GUI
 {
@@ -22,6 +24,8 @@ namespace Projekt_Koncowy_GUI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<LocalContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Local")));
+
             services.AddControllersWithViews();
         }
 
@@ -46,7 +50,7 @@ namespace Projekt_Koncowy_GUI
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=EndpointDevice}/{action=Index}/{id?}");
             });
         }
     }
