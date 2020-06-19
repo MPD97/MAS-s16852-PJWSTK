@@ -23,8 +23,10 @@ namespace Projekt_Koncowy_GUI.Models
         public virtual ICollection<Equipment> Equipments { get; set; }
 
 
-        public string CommunicationModuleImei { get; set; }
-        public CommunicationModule CommunicationModule { get; set; }
+        public ICollection<CommunicationModule> CommunicationModules { get; set; }
+        public ICollection<AddOnModule> AddOnModules { get; set; }
+        public ICollection<StorageProcess> StorageProcesses { get; set; }
+        public ICollection<License> Licenses { get; set; }
 
 
         public void PerformAction(Action action)

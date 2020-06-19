@@ -14,6 +14,24 @@ namespace Projekt_Koncowy_GUI.Models
         public DbSet<Equipment> Equipments { get; set; }
         public DbSet<Component> Components { get; set; }
         public DbSet<Replacement> Replacements { get; set; }
+        public DbSet<CommunicationModule> CommunicationModules { get; set; }
+        public DbSet<AddOnModule> AddOnModules { get; set; }
+        public DbSet<BluetoothModule> BluetoothModules { get; set; }
+        public DbSet<GPSModule> GPSModules { get; set; }
+        public DbSet<SupportedSattelites> SupportedSattelites { get; set; }
+
+
+        public DbSet<StorageProcess> StorageProcesses { get; set; }
+        public DbSet<Warehouse> Warehouses { get; set; }
+        public DbSet<StaticProperties> StaticProperties { get; set; }
+        public DbSet<Employee> Employees { get; set; }
+        public DbSet<EmployeeStorekeeper> EmployeeStorekeepers { get; set; }
+        public DbSet<EmployeeServiceman> EmployeeServicemans { get; set; }
+
+        public DbSet<License> Licenses { get; set; }
+        public DbSet<FullLicense> fullLicenses { get; set; }
+        public DbSet<PartialLicense> PartialLicenses { get; set; }
+        public DbSet<Client> Clients { get; set; }
 
         public LocalContext([NotNullAttribute] DbContextOptions options) : base(options)
         {
@@ -26,9 +44,6 @@ namespace Projekt_Koncowy_GUI.Models
             modelBuilder.Entity<EndpointDevice>()
               .HasKey(ed => new { ed.Identifier });
 
-            modelBuilder.Entity<EndpointDevice>()
-                .Property(ed => ed.CommunicationModuleImei)
-                .IsRequired(true);
 
             modelBuilder.Entity<Component>()
               .HasKey(comp => new { comp.Identifier });
@@ -40,20 +55,33 @@ namespace Projekt_Koncowy_GUI.Models
                 .HasIndex(c => c.IMEI)
                 .IsUnique();
 
+            modelBuilder.Entity<Employee>()
+                .HasOne(e => e.EmployeeServicemen)
+                .WithOne(a => a.Employee)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Employee>()
+                .HasOne(e => e.EmployeeStorekeeper)
+                .WithOne(a => a.Employee)
+                .OnDelete(DeleteBehavior.Cascade);
+
+             
 
             modelBuilder.Entity<CommunicationModule>().HasData(new CommunicationModule
             {
                 IMEI = "432234543231284",
                 Frequency = 5500,
                 Model = "X425",
-                SerialNumber = 123536190258
+                SerialNumber = 123536190258,
+                EndpointDeviceId = 15
             });
             modelBuilder.Entity<CommunicationModule>().HasData(new CommunicationModule
             {
                 IMEI = "999683672983858",
                 Frequency = 5500,
                 Model = "WW849",
-                SerialNumber = 643643634634
+                SerialNumber = 643643634634,
+                EndpointDeviceId = 10
             });
 
             modelBuilder.Entity<EndpointDevice>().HasData(new EndpointDevice
@@ -64,7 +92,6 @@ namespace Projekt_Koncowy_GUI.Models
                 Model = "Speed 500w",
                 Tested = Tested.Nie,
                 TestResult = TestResult.Negatywny,
-                CommunicationModuleImei = "432234543231284"
             });
             modelBuilder.Entity<EndpointDevice>().HasData(new EndpointDevice
             {
@@ -74,8 +101,6 @@ namespace Projekt_Koncowy_GUI.Models
                 Model = "Ride Fast 200W",
                 Tested = Tested.Nie,
                 TestResult = TestResult.Negatywny,
-                CommunicationModuleImei = "999683672983858"
-
             });
 
 

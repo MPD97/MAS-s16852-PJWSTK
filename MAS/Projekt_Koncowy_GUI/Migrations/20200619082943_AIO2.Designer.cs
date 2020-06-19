@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Projekt_Koncowy_GUI.Models;
 
 namespace Projekt_Koncowy_GUI.Migrations
 {
     [DbContext(typeof(LocalContext))]
-    partial class LocalContextModelSnapshot : ModelSnapshot
+    [Migration("20200619082943_AIO2")]
+    partial class AIO2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,23 +56,6 @@ namespace Projekt_Koncowy_GUI.Migrations
                     b.HasIndex("AddOnModuleId");
 
                     b.ToTable("BluetoothModules");
-                });
-
-            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.Client", b =>
-                {
-                    b.Property<int>("ClientId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("LicenseId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ClientId");
-
-                    b.HasIndex("LicenseId");
-
-                    b.ToTable("Clients");
                 });
 
             modelBuilder.Entity("Projekt_Koncowy_GUI.Models.CommunicationModule", b =>
@@ -248,7 +233,7 @@ namespace Projekt_Koncowy_GUI.Migrations
                         new
                         {
                             Identifier = 10,
-                            DateOfProduction = new DateTime(2020, 3, 21, 10, 52, 28, 147, DateTimeKind.Local).AddTicks(9405),
+                            DateOfProduction = new DateTime(2020, 3, 21, 10, 29, 43, 57, DateTimeKind.Local).AddTicks(4131),
                             Gauge = 2,
                             Model = "Speed 500w",
                             TestResult = 0,
@@ -257,7 +242,7 @@ namespace Projekt_Koncowy_GUI.Migrations
                         new
                         {
                             Identifier = 15,
-                            DateOfProduction = new DateTime(2020, 4, 20, 10, 52, 28, 150, DateTimeKind.Local).AddTicks(4621),
+                            DateOfProduction = new DateTime(2020, 4, 20, 10, 29, 43, 59, DateTimeKind.Local).AddTicks(7542),
                             Gauge = 2,
                             Model = "Ride Fast 200W",
                             TestResult = 0,
@@ -320,27 +305,6 @@ namespace Projekt_Koncowy_GUI.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.FullLicense", b =>
-                {
-                    b.Property<int>("FullLicenseId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CardNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("LicenseId")
-                        .HasColumnType("int");
-
-                    b.HasKey("FullLicenseId");
-
-                    b.HasIndex("LicenseId")
-                        .IsUnique();
-
-                    b.ToTable("fullLicenses");
-                });
-
             modelBuilder.Entity("Projekt_Koncowy_GUI.Models.GPSModule", b =>
                 {
                     b.Property<int>("GPSModuleId")
@@ -356,50 +320,6 @@ namespace Projekt_Koncowy_GUI.Migrations
                     b.HasIndex("AddOnModuleId");
 
                     b.ToTable("GPSModules");
-                });
-
-            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.License", b =>
-                {
-                    b.Property<int>("LicenseId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("BuyDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("EndpointDeviceIdentifier")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("ExpireDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("LicenseId");
-
-                    b.HasIndex("EndpointDeviceIdentifier");
-
-                    b.ToTable("Licenses");
-                });
-
-            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.PartialLicense", b =>
-                {
-                    b.Property<int>("PartialLicenseId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("LicenseId")
-                        .HasColumnType("int");
-
-                    b.HasKey("PartialLicenseId");
-
-                    b.HasIndex("LicenseId")
-                        .IsUnique();
-
-                    b.ToTable("PartialLicenses");
                 });
 
             modelBuilder.Entity("Projekt_Koncowy_GUI.Models.Replacement", b =>
@@ -436,9 +356,6 @@ namespace Projekt_Koncowy_GUI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("RequiredNumberOfEmployees")
-                        .HasColumnType("int");
 
                     b.HasKey("StaticPropertiesId");
 
@@ -526,15 +443,6 @@ namespace Projekt_Koncowy_GUI.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.Client", b =>
-                {
-                    b.HasOne("Projekt_Koncowy_GUI.Models.License", "License")
-                        .WithMany()
-                        .HasForeignKey("LicenseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Projekt_Koncowy_GUI.Models.CommunicationModule", b =>
                 {
                     b.HasOne("Projekt_Koncowy_GUI.Models.EndpointDevice", "EndpointDevice")
@@ -582,36 +490,11 @@ namespace Projekt_Koncowy_GUI.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.FullLicense", b =>
-                {
-                    b.HasOne("Projekt_Koncowy_GUI.Models.License", "License")
-                        .WithOne("FullLicense")
-                        .HasForeignKey("Projekt_Koncowy_GUI.Models.FullLicense", "LicenseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Projekt_Koncowy_GUI.Models.GPSModule", b =>
                 {
                     b.HasOne("Projekt_Koncowy_GUI.Models.AddOnModule", "AddOnModule")
                         .WithMany("GPSModules")
                         .HasForeignKey("AddOnModuleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.License", b =>
-                {
-                    b.HasOne("Projekt_Koncowy_GUI.Models.EndpointDevice", null)
-                        .WithMany("Licenses")
-                        .HasForeignKey("EndpointDeviceIdentifier");
-                });
-
-            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.PartialLicense", b =>
-                {
-                    b.HasOne("Projekt_Koncowy_GUI.Models.License", "License")
-                        .WithOne("PartialLicense")
-                        .HasForeignKey("Projekt_Koncowy_GUI.Models.PartialLicense", "LicenseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

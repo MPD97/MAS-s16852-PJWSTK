@@ -11,6 +11,7 @@ namespace Projekt_Koncowy_GUI.Models
         public string Model { get; set; }
         public long? SerialNumber { get; set; }     // Atrybut opcjonalny
 
-        public ICollection<EndpointDevice> EndpointDevices { get; set; }
+        public int EndpointDeviceId { get; set; }
+        public EndpointDevice EndpointDevice { get; set; }
     }
 }

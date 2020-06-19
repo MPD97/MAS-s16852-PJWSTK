@@ -15,6 +15,10 @@
     <Compile Remove="Migrations\20200609103213_fixMigrations.Designer.cs" />
     <Compile Remove="Migrations\20200609103423_FixingMigration.cs" />
     <Compile Remove="Migrations\20200609103423_FixingMigration.Designer.cs" />
+    <Compile Remove="Migrations\20200619081944_StorageProcess.cs" />
+    <Compile Remove="Migrations\20200619081944_StorageProcess.Designer.cs" />
+    <Compile Remove="Migrations\20200619082032_StorageProcess.cs" />
+    <Compile Remove="Migrations\20200619082032_StorageProcess.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
