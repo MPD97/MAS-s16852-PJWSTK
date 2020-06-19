@@ -42,6 +42,8 @@ namespace Projekt_Koncowy_GUI.Models
         public DbSet<ServerVM> ServerVMs { get; set; }
         public DbSet<Storage> Storages { get; set; }
 
+        public DbSet<Function> Functions { get; set; }
+        public DbSet<UTO> UTOs { get; set; }
 
         public LocalContext([NotNullAttribute] DbContextOptions options) : base(options)
         {

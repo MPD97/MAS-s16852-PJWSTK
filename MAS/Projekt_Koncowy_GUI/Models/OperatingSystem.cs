@@ -18,6 +18,9 @@ namespace Projekt_Koncowy_GUI.Models
         public int ServerId { get; set; }
         public Server Server { get; set; }
 
+        public ICollection<Function> Functions { get; set; }
+
+
         public void Update()                                // Metoda
         {
 
