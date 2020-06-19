@@ -19,6 +19,44 @@ namespace Projekt_Koncowy_GUI.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.CommunicationModule", b =>
+                {
+                    b.Property<string>("IMEI")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Frequency")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Model")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("SerialNumber")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("IMEI");
+
+                    b.HasIndex("IMEI")
+                        .IsUnique();
+
+                    b.ToTable("CommunicationModule");
+
+                    b.HasData(
+                        new
+                        {
+                            IMEI = "432234543231284",
+                            Frequency = 5500,
+                            Model = "X425",
+                            SerialNumber = 123536190258L
+                        },
+                        new
+                        {
+                            IMEI = "999683672983858",
+                            Frequency = 5500,
+                            Model = "WW849",
+                            SerialNumber = 643643634634L
+                        });
+                });
+
             modelBuilder.Entity("Projekt_Koncowy_GUI.Models.Component", b =>
                 {
                     b.Property<string>("Identifier")
@@ -56,6 +94,10 @@ namespace Projekt_Koncowy_GUI.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("CommunicationModuleImei")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<DateTime>("DateOfProduction")
                         .HasColumnType("datetime2");
 
@@ -73,13 +115,16 @@ namespace Projekt_Koncowy_GUI.Migrations
 
                     b.HasKey("Identifier");
 
+                    b.HasIndex("CommunicationModuleImei");
+
                     b.ToTable("EndpointDevices");
 
                     b.HasData(
                         new
                         {
                             Identifier = 10,
-                            DateOfProduction = new DateTime(2020, 3, 11, 12, 38, 1, 562, DateTimeKind.Local).AddTicks(8929),
+                            CommunicationModuleImei = "432234543231284",
+                            DateOfProduction = new DateTime(2020, 3, 21, 9, 26, 15, 858, DateTimeKind.Local).AddTicks(4861),
                             Gauge = 2,
                             Model = "Speed 500w",
                             TestResult = 0,
@@ -88,7 +133,8 @@ namespace Projekt_Koncowy_GUI.Migrations
                         new
                         {
                             Identifier = 15,
-                            DateOfProduction = new DateTime(2020, 4, 10, 12, 38, 1, 566, DateTimeKind.Local).AddTicks(2214),
+                            CommunicationModuleImei = "999683672983858",
+                            DateOfProduction = new DateTime(2020, 4, 20, 9, 26, 15, 861, DateTimeKind.Local).AddTicks(365),
                             Gauge = 2,
                             Model = "Ride Fast 200W",
                             TestResult = 0,
@@ -177,6 +223,15 @@ namespace Projekt_Koncowy_GUI.Migrations
                             BaseId = "MMM-005-550",
                             ReplacedById = "AAA-BBB-123"
                         });
+                });
+
+            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.EndpointDevice", b =>
+                {
+                    b.HasOne("Projekt_Koncowy_GUI.Models.CommunicationModule", "CommunicationModule")
+                        .WithMany("EndpointDevices")
+                        .HasForeignKey("CommunicationModuleImei")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Projekt_Koncowy_GUI.Models.Equipment", b =>
