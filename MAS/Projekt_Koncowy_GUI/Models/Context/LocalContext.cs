@@ -33,6 +33,16 @@ namespace Projekt_Koncowy_GUI.Models
         public DbSet<PartialLicense> PartialLicenses { get; set; }
         public DbSet<Client> Clients { get; set; }
 
+        public DbSet<User> User { get; set; }
+        public DbSet<UserAdministrator> UserAdministrators { get; set; }
+        public DbSet<UserNormal> UserNormals { get; set; }
+
+        public DbSet<OperatingSystem> OperatingSystems { get; set; }
+        public DbSet<Server> Servers { get; set; }
+        public DbSet<ServerVM> ServerVMs { get; set; }
+        public DbSet<Storage> Storages { get; set; }
+
+
         public LocalContext([NotNullAttribute] DbContextOptions options) : base(options)
         {
         }
@@ -65,7 +75,26 @@ namespace Projekt_Koncowy_GUI.Models
                 .WithOne(a => a.Employee)
                 .OnDelete(DeleteBehavior.Cascade);
 
-             
+            modelBuilder.Entity<User>()
+                 .HasMany(e => e.UsersAdministrators)
+                 .WithOne(a => a.User)
+                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<User>()
+                .HasMany(e => e.UserNormals)
+                .WithOne(a => a.User)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Server>()
+                .HasOne(e => e.ServerVM)
+                .WithOne(a => a.Server)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Server>()
+               .HasOne(e => e.Storage)
+               .WithOne(a => a.Server)
+               .OnDelete(DeleteBehavior.Cascade);
+
 
             modelBuilder.Entity<CommunicationModule>().HasData(new CommunicationModule
             {

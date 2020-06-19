@@ -24,9 +24,12 @@ namespace Projekt_Koncowy_GUI.Models
 
 
         public ICollection<CommunicationModule> CommunicationModules { get; set; }
-        public ICollection<AddOnModule> AddOnModules { get; set; }
+        public ICollection<EndpointDeviceAddOnModule> EndpointDeviceAddOnModules { get; set; }
         public ICollection<StorageProcess> StorageProcesses { get; set; }
         public ICollection<License> Licenses { get; set; }
+
+        public int? OperatingSystemId { get; set; }
+        public OperatingSystem OperatingSystem { get; set; }
 
 
         public void PerformAction(Action action)

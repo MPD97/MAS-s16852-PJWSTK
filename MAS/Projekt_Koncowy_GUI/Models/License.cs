@@ -16,5 +16,9 @@ namespace Projekt_Koncowy_GUI.Models
         public FullLicense FullLicense { get; set; }
 
         public PartialLicense PartialLicense { get; set; }
+
+        public ICollection<User> Users { get; set; }
+        public ICollection<Client> Clients { get; set; }
+
     }
 }

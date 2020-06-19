@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Projekt_Koncowy_GUI.Models;
 
 namespace Projekt_Koncowy_GUI.Migrations
 {
     [DbContext(typeof(LocalContext))]
-    partial class LocalContextModelSnapshot : ModelSnapshot
+    [Migration("20200619091228_User")]
+    partial class User
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,7 +28,12 @@ namespace Projekt_Koncowy_GUI.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("EndpointDeviceId")
+                        .HasColumnType("int");
+
                     b.HasKey("AddOnModuleId");
+
+                    b.HasIndex("EndpointDeviceId");
 
                     b.ToTable("AddOnModules");
                 });
@@ -229,9 +236,6 @@ namespace Projekt_Koncowy_GUI.Migrations
                     b.Property<string>("Model")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("OperatingSystemId")
-                        .HasColumnType("int");
-
                     b.Property<int>("TestResult")
                         .HasColumnType("int");
 
@@ -240,15 +244,13 @@ namespace Projekt_Koncowy_GUI.Migrations
 
                     b.HasKey("Identifier");
 
-                    b.HasIndex("OperatingSystemId");
-
                     b.ToTable("EndpointDevices");
 
                     b.HasData(
                         new
                         {
                             Identifier = 10,
-                            DateOfProduction = new DateTime(2020, 3, 21, 11, 39, 57, 483, DateTimeKind.Local).AddTicks(1442),
+                            DateOfProduction = new DateTime(2020, 3, 21, 11, 12, 27, 659, DateTimeKind.Local).AddTicks(3672),
                             Gauge = 2,
                             Model = "Speed 500w",
                             TestResult = 0,
@@ -257,34 +259,12 @@ namespace Projekt_Koncowy_GUI.Migrations
                         new
                         {
                             Identifier = 15,
-                            DateOfProduction = new DateTime(2020, 4, 20, 11, 39, 57, 485, DateTimeKind.Local).AddTicks(4879),
+                            DateOfProduction = new DateTime(2020, 4, 20, 11, 12, 27, 661, DateTimeKind.Local).AddTicks(7041),
                             Gauge = 2,
                             Model = "Ride Fast 200W",
                             TestResult = 0,
                             Tested = 0
                         });
-                });
-
-            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.EndpointDeviceAddOnModule", b =>
-                {
-                    b.Property<int>("EndpointDeviceAddOnModuleId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("AddOnModuleId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("EndpointDeviceId")
-                        .HasColumnType("int");
-
-                    b.HasKey("EndpointDeviceAddOnModuleId");
-
-                    b.HasIndex("AddOnModuleId");
-
-                    b.HasIndex("EndpointDeviceId");
-
-                    b.ToTable("EndpointDeviceAddOnModule");
                 });
 
             modelBuilder.Entity("Projekt_Koncowy_GUI.Models.Equipment", b =>
@@ -406,29 +386,6 @@ namespace Projekt_Koncowy_GUI.Migrations
                     b.ToTable("Licenses");
                 });
 
-            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.OperatingSystem", b =>
-                {
-                    b.Property<int>("OperatingSystemId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ServerId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Type")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Version")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("OperatingSystemId");
-
-                    b.HasIndex("ServerId");
-
-                    b.ToTable("OperatingSystems");
-                });
-
             modelBuilder.Entity("Projekt_Koncowy_GUI.Models.PartialLicense", b =>
                 {
                     b.Property<int>("PartialLicenseId")
@@ -475,45 +432,6 @@ namespace Projekt_Koncowy_GUI.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.Server", b =>
-                {
-                    b.Property<int>("ServerId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ProcessorManufacturer")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ProcessorModel")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ServerId");
-
-                    b.ToTable("Servers");
-                });
-
-            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.ServerVM", b =>
-                {
-                    b.Property<int>("ServerVMId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ServerId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("VirtualMAC")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ServerVMId");
-
-                    b.HasIndex("ServerId")
-                        .IsUnique();
-
-                    b.ToTable("ServerVMs");
-                });
-
             modelBuilder.Entity("Projekt_Koncowy_GUI.Models.StaticProperties", b =>
                 {
                     b.Property<int>("StaticPropertiesId")
@@ -527,36 +445,6 @@ namespace Projekt_Koncowy_GUI.Migrations
                     b.HasKey("StaticPropertiesId");
 
                     b.ToTable("StaticProperties");
-                });
-
-            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.Storage", b =>
-                {
-                    b.Property<int>("StorageId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<decimal>("DiskSize")
-                        .HasColumnType("decimal(20,0)");
-
-                    b.Property<decimal>("RAMSize")
-                        .HasColumnType("decimal(20,0)");
-
-                    b.Property<int>("ServerId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("TakenDiskSpace")
-                        .HasColumnType("decimal(20,0)");
-
-                    b.Property<decimal>("TakenRamSpace")
-                        .HasColumnType("decimal(20,0)");
-
-                    b.HasKey("StorageId");
-
-                    b.HasIndex("ServerId")
-                        .IsUnique();
-
-                    b.ToTable("Storages");
                 });
 
             modelBuilder.Entity("Projekt_Koncowy_GUI.Models.StorageProcess", b =>
@@ -673,6 +561,15 @@ namespace Projekt_Koncowy_GUI.Migrations
                     b.ToTable("Warehouses");
                 });
 
+            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.AddOnModule", b =>
+                {
+                    b.HasOne("Projekt_Koncowy_GUI.Models.EndpointDevice", "EndpointDevice")
+                        .WithMany("AddOnModules")
+                        .HasForeignKey("EndpointDeviceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Projekt_Koncowy_GUI.Models.BluetoothModule", b =>
                 {
                     b.HasOne("Projekt_Koncowy_GUI.Models.AddOnModule", "AddOnModule")
@@ -725,28 +622,6 @@ namespace Projekt_Koncowy_GUI.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.EndpointDevice", b =>
-                {
-                    b.HasOne("Projekt_Koncowy_GUI.Models.OperatingSystem", "OperatingSystem")
-                        .WithMany("EndpointDevices")
-                        .HasForeignKey("OperatingSystemId");
-                });
-
-            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.EndpointDeviceAddOnModule", b =>
-                {
-                    b.HasOne("Projekt_Koncowy_GUI.Models.AddOnModule", "AddOnModule")
-                        .WithMany("EndpointDeviceAddOnModules")
-                        .HasForeignKey("AddOnModuleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Projekt_Koncowy_GUI.Models.EndpointDevice", "EndpointDevice")
-                        .WithMany("EndpointDeviceAddOnModules")
-                        .HasForeignKey("EndpointDeviceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Projekt_Koncowy_GUI.Models.Equipment", b =>
                 {
                     b.HasOne("Projekt_Koncowy_GUI.Models.Component", "Component")
@@ -785,15 +660,6 @@ namespace Projekt_Koncowy_GUI.Migrations
                         .HasForeignKey("EndpointDeviceIdentifier");
                 });
 
-            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.OperatingSystem", b =>
-                {
-                    b.HasOne("Projekt_Koncowy_GUI.Models.Server", "Server")
-                        .WithMany("OperatingSystems")
-                        .HasForeignKey("ServerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Projekt_Koncowy_GUI.Models.PartialLicense", b =>
                 {
                     b.HasOne("Projekt_Koncowy_GUI.Models.License", "License")
@@ -812,24 +678,6 @@ namespace Projekt_Koncowy_GUI.Migrations
                     b.HasOne("Projekt_Koncowy_GUI.Models.Component", "ReplacedBy")
                         .WithMany("ReplacedBys")
                         .HasForeignKey("ReplacedById");
-                });
-
-            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.ServerVM", b =>
-                {
-                    b.HasOne("Projekt_Koncowy_GUI.Models.Server", "Server")
-                        .WithOne("ServerVM")
-                        .HasForeignKey("Projekt_Koncowy_GUI.Models.ServerVM", "ServerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.Storage", b =>
-                {
-                    b.HasOne("Projekt_Koncowy_GUI.Models.Server", "Server")
-                        .WithOne("Storage")
-                        .HasForeignKey("Projekt_Koncowy_GUI.Models.Storage", "ServerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Projekt_Koncowy_GUI.Models.StorageProcess", b =>
