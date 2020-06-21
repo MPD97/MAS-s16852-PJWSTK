@@ -19,6 +19,100 @@ namespace Projekt_Koncowy_GUI.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.AddOnModule", b =>
+                {
+                    b.Property<int>("AddOnModuleId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.HasKey("AddOnModuleId");
+
+                    b.ToTable("AddOnModules");
+                });
+
+            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.BluetoothModule", b =>
+                {
+                    b.Property<int>("BluetoothModuleId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AddOnModuleId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TransmisionVersion")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("BluetoothModuleId");
+
+                    b.HasIndex("AddOnModuleId");
+
+                    b.ToTable("BluetoothModules");
+                });
+
+            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.Client", b =>
+                {
+                    b.Property<int>("ClientId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("LicenseId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ClientId");
+
+                    b.HasIndex("LicenseId");
+
+                    b.ToTable("Clients");
+                });
+
+            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.CommunicationModule", b =>
+                {
+                    b.Property<string>("IMEI")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("EndpointDeviceId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Frequency")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Model")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("SerialNumber")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("IMEI");
+
+                    b.HasIndex("EndpointDeviceId");
+
+                    b.HasIndex("IMEI")
+                        .IsUnique();
+
+                    b.ToTable("CommunicationModules");
+
+                    b.HasData(
+                        new
+                        {
+                            IMEI = "432234543231284",
+                            EndpointDeviceId = 15,
+                            Frequency = 5500,
+                            Model = "X425",
+                            SerialNumber = 123536190258L
+                        },
+                        new
+                        {
+                            IMEI = "999683672983858",
+                            EndpointDeviceId = 10,
+                            Frequency = 5500,
+                            Model = "WW849",
+                            SerialNumber = 643643634634L
+                        });
+                });
+
             modelBuilder.Entity("Projekt_Koncowy_GUI.Models.Component", b =>
                 {
                     b.Property<string>("Identifier")
@@ -49,6 +143,76 @@ namespace Projekt_Koncowy_GUI.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.Employee", b =>
+                {
+                    b.Property<int>("EmployeeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("BirthDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WarehouseId")
+                        .HasColumnType("int");
+
+                    b.HasKey("EmployeeId");
+
+                    b.HasIndex("WarehouseId");
+
+                    b.ToTable("Employees");
+                });
+
+            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.EmployeeServiceman", b =>
+                {
+                    b.Property<int>("EmployeeServicemanId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("BirthDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("EmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Specialization")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("EmployeeServicemanId");
+
+                    b.HasIndex("EmployeeId")
+                        .IsUnique()
+                        .HasFilter("[EmployeeId] IS NOT NULL");
+
+                    b.ToTable("EmployeeServicemans");
+                });
+
+            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.EmployeeStorekeeper", b =>
+                {
+                    b.Property<int>("EmployeeStorekeeperId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("BirthDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("EmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("ForkliftLicense")
+                        .HasColumnType("bit");
+
+                    b.HasKey("EmployeeStorekeeperId");
+
+                    b.HasIndex("EmployeeId")
+                        .IsUnique()
+                        .HasFilter("[EmployeeId] IS NOT NULL");
+
+                    b.ToTable("EmployeeStorekeepers");
+                });
+
             modelBuilder.Entity("Projekt_Koncowy_GUI.Models.EndpointDevice", b =>
                 {
                     b.Property<int>("Identifier")
@@ -65,6 +229,9 @@ namespace Projekt_Koncowy_GUI.Migrations
                     b.Property<string>("Model")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("OperatingSystemId")
+                        .HasColumnType("int");
+
                     b.Property<int>("TestResult")
                         .HasColumnType("int");
 
@@ -73,13 +240,15 @@ namespace Projekt_Koncowy_GUI.Migrations
 
                     b.HasKey("Identifier");
 
+                    b.HasIndex("OperatingSystemId");
+
                     b.ToTable("EndpointDevices");
 
                     b.HasData(
                         new
                         {
                             Identifier = 10,
-                            DateOfProduction = new DateTime(2020, 3, 11, 12, 38, 1, 562, DateTimeKind.Local).AddTicks(8929),
+                            DateOfProduction = new DateTime(2020, 3, 23, 12, 59, 16, 241, DateTimeKind.Local).AddTicks(4246),
                             Gauge = 2,
                             Model = "Speed 500w",
                             TestResult = 0,
@@ -88,12 +257,34 @@ namespace Projekt_Koncowy_GUI.Migrations
                         new
                         {
                             Identifier = 15,
-                            DateOfProduction = new DateTime(2020, 4, 10, 12, 38, 1, 566, DateTimeKind.Local).AddTicks(2214),
+                            DateOfProduction = new DateTime(2020, 4, 22, 12, 59, 16, 245, DateTimeKind.Local).AddTicks(9201),
                             Gauge = 2,
                             Model = "Ride Fast 200W",
                             TestResult = 0,
                             Tested = 0
                         });
+                });
+
+            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.EndpointDeviceAddOnModule", b =>
+                {
+                    b.Property<int>("EndpointDeviceAddOnModuleId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AddOnModuleId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EndpointDeviceId")
+                        .HasColumnType("int");
+
+                    b.HasKey("EndpointDeviceAddOnModuleId");
+
+                    b.HasIndex("AddOnModuleId");
+
+                    b.HasIndex("EndpointDeviceId");
+
+                    b.ToTable("EndpointDeviceAddOnModule");
                 });
 
             modelBuilder.Entity("Projekt_Koncowy_GUI.Models.Equipment", b =>
@@ -151,6 +342,134 @@ namespace Projekt_Koncowy_GUI.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.FullLicense", b =>
+                {
+                    b.Property<int>("FullLicenseId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CardNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("LicenseId")
+                        .HasColumnType("int");
+
+                    b.HasKey("FullLicenseId");
+
+                    b.HasIndex("LicenseId");
+
+                    b.ToTable("fullLicenses");
+                });
+
+            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.Function", b =>
+                {
+                    b.Property<int>("FunctionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AvailableFunction")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("OperatingSystemId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UTOId")
+                        .HasColumnType("int");
+
+                    b.HasKey("FunctionId");
+
+                    b.HasIndex("OperatingSystemId");
+
+                    b.HasIndex("UTOId");
+
+                    b.ToTable("Functions");
+                });
+
+            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.GPSModule", b =>
+                {
+                    b.Property<int>("GPSModuleId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AddOnModuleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("GPSModuleId");
+
+                    b.HasIndex("AddOnModuleId");
+
+                    b.ToTable("GPSModules");
+                });
+
+            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.License", b =>
+                {
+                    b.Property<int>("LicenseId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("BuyDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("EndpointDeviceId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ExpireDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("LicenseId");
+
+                    b.HasIndex("EndpointDeviceId");
+
+                    b.ToTable("Licenses");
+                });
+
+            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.OperatingSystem", b =>
+                {
+                    b.Property<int>("OperatingSystemId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ServerId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Version")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("OperatingSystemId");
+
+                    b.HasIndex("ServerId");
+
+                    b.ToTable("OperatingSystems");
+                });
+
+            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.PartialLicense", b =>
+                {
+                    b.Property<int>("PartialLicenseId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("LicenseId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PartialLicenseId");
+
+                    b.HasIndex("LicenseId");
+
+                    b.ToTable("PartialLicenses");
+                });
+
             modelBuilder.Entity("Projekt_Koncowy_GUI.Models.Replacement", b =>
                 {
                     b.Property<string>("ReplacementId")
@@ -179,6 +498,298 @@ namespace Projekt_Koncowy_GUI.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.Server", b =>
+                {
+                    b.Property<int>("ServerId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ProcessorManufacturer")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProcessorModel")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ServerId");
+
+                    b.ToTable("Servers");
+                });
+
+            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.ServerVM", b =>
+                {
+                    b.Property<int>("ServerVMId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ServerId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("VirtualMAC")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ServerVMId");
+
+                    b.HasIndex("ServerId")
+                        .IsUnique();
+
+                    b.ToTable("ServerVMs");
+                });
+
+            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.StaticProperties", b =>
+                {
+                    b.Property<int>("StaticPropertiesId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("RequiredNumberOfEmployees")
+                        .HasColumnType("int");
+
+                    b.HasKey("StaticPropertiesId");
+
+                    b.ToTable("StaticProperties");
+                });
+
+            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.Storage", b =>
+                {
+                    b.Property<int>("StorageId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<decimal>("DiskSize")
+                        .HasColumnType("decimal(20,0)");
+
+                    b.Property<decimal>("RAMSize")
+                        .HasColumnType("decimal(20,0)");
+
+                    b.Property<int>("ServerId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("TakenDiskSpace")
+                        .HasColumnType("decimal(20,0)");
+
+                    b.Property<decimal>("TakenRamSpace")
+                        .HasColumnType("decimal(20,0)");
+
+                    b.HasKey("StorageId");
+
+                    b.HasIndex("ServerId")
+                        .IsUnique();
+
+                    b.ToTable("Storages");
+                });
+
+            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.StorageProcess", b =>
+                {
+                    b.Property<int>("StorageProcessId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("EndpointDeviceId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("FromReturn")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("PlacementDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WarehouseId")
+                        .HasColumnType("int");
+
+                    b.HasKey("StorageProcessId");
+
+                    b.HasIndex("EndpointDeviceId");
+
+                    b.HasIndex("WarehouseId");
+
+                    b.ToTable("StorageProcesses");
+                });
+
+            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.SupportedSattelites", b =>
+                {
+                    b.Property<int>("SupportedSattelitesId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("GPSModuleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("SupportedSattelitesId");
+
+                    b.HasIndex("GPSModuleId");
+
+                    b.ToTable("SupportedSattelites");
+                });
+
+            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.UTO", b =>
+                {
+                    b.Property<int>("UTOId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Manufacturer")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Model")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UTOId");
+
+                    b.ToTable("UTOs");
+                });
+
+            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.User", b =>
+                {
+                    b.Property<int>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("LicenseId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId");
+
+                    b.HasIndex("LicenseId");
+
+                    b.ToTable("User");
+                });
+
+            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.UserAdministrator", b =>
+                {
+                    b.Property<int>("UserAdministratorId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserAdministratorId");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("UserAdministrators");
+                });
+
+            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.UserNormal", b =>
+                {
+                    b.Property<int>("UserNormalId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserNormalId");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("UserNormals");
+                });
+
+            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.Warehouse", b =>
+                {
+                    b.Property<int>("WarehouseId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("AreaInSquareMeters")
+                        .HasColumnType("int");
+
+                    b.HasKey("WarehouseId");
+
+                    b.ToTable("Warehouses");
+                });
+
+            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.BluetoothModule", b =>
+                {
+                    b.HasOne("Projekt_Koncowy_GUI.Models.AddOnModule", "AddOnModule")
+                        .WithMany("BluetoothModules")
+                        .HasForeignKey("AddOnModuleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.Client", b =>
+                {
+                    b.HasOne("Projekt_Koncowy_GUI.Models.License", "License")
+                        .WithMany("Clients")
+                        .HasForeignKey("LicenseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.CommunicationModule", b =>
+                {
+                    b.HasOne("Projekt_Koncowy_GUI.Models.EndpointDevice", "EndpointDevice")
+                        .WithMany("CommunicationModules")
+                        .HasForeignKey("EndpointDeviceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.Employee", b =>
+                {
+                    b.HasOne("Projekt_Koncowy_GUI.Models.Warehouse", "Warehouse")
+                        .WithMany("Employees")
+                        .HasForeignKey("WarehouseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.EmployeeServiceman", b =>
+                {
+                    b.HasOne("Projekt_Koncowy_GUI.Models.Employee", "Employee")
+                        .WithOne("EmployeeServicemen")
+                        .HasForeignKey("Projekt_Koncowy_GUI.Models.EmployeeServiceman", "EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.EmployeeStorekeeper", b =>
+                {
+                    b.HasOne("Projekt_Koncowy_GUI.Models.Employee", "Employee")
+                        .WithOne("EmployeeStorekeeper")
+                        .HasForeignKey("Projekt_Koncowy_GUI.Models.EmployeeStorekeeper", "EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.EndpointDevice", b =>
+                {
+                    b.HasOne("Projekt_Koncowy_GUI.Models.OperatingSystem", "OperatingSystem")
+                        .WithMany("EndpointDevices")
+                        .HasForeignKey("OperatingSystemId");
+                });
+
+            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.EndpointDeviceAddOnModule", b =>
+                {
+                    b.HasOne("Projekt_Koncowy_GUI.Models.AddOnModule", "AddOnModule")
+                        .WithMany("EndpointDeviceAddOnModules")
+                        .HasForeignKey("AddOnModuleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Projekt_Koncowy_GUI.Models.EndpointDevice", "EndpointDevice")
+                        .WithMany("EndpointDeviceAddOnModules")
+                        .HasForeignKey("EndpointDeviceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Projekt_Koncowy_GUI.Models.Equipment", b =>
                 {
                     b.HasOne("Projekt_Koncowy_GUI.Models.Component", "Component")
@@ -192,6 +803,66 @@ namespace Projekt_Koncowy_GUI.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.FullLicense", b =>
+                {
+                    b.HasOne("Projekt_Koncowy_GUI.Models.License", "License")
+                        .WithMany("FullLicenses")
+                        .HasForeignKey("LicenseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.Function", b =>
+                {
+                    b.HasOne("Projekt_Koncowy_GUI.Models.OperatingSystem", "OperatingSystem")
+                        .WithMany("Functions")
+                        .HasForeignKey("OperatingSystemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Projekt_Koncowy_GUI.Models.UTO", "UTOs")
+                        .WithMany("Functions")
+                        .HasForeignKey("UTOId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.GPSModule", b =>
+                {
+                    b.HasOne("Projekt_Koncowy_GUI.Models.AddOnModule", "AddOnModule")
+                        .WithMany("GPSModules")
+                        .HasForeignKey("AddOnModuleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.License", b =>
+                {
+                    b.HasOne("Projekt_Koncowy_GUI.Models.EndpointDevice", "EndpointDevice")
+                        .WithMany("Licenses")
+                        .HasForeignKey("EndpointDeviceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.OperatingSystem", b =>
+                {
+                    b.HasOne("Projekt_Koncowy_GUI.Models.Server", "Server")
+                        .WithMany("OperatingSystems")
+                        .HasForeignKey("ServerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.PartialLicense", b =>
+                {
+                    b.HasOne("Projekt_Koncowy_GUI.Models.License", "License")
+                        .WithMany("PartialLicenses")
+                        .HasForeignKey("LicenseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Projekt_Koncowy_GUI.Models.Replacement", b =>
                 {
                     b.HasOne("Projekt_Koncowy_GUI.Models.Component", "Base")
@@ -201,6 +872,75 @@ namespace Projekt_Koncowy_GUI.Migrations
                     b.HasOne("Projekt_Koncowy_GUI.Models.Component", "ReplacedBy")
                         .WithMany("ReplacedBys")
                         .HasForeignKey("ReplacedById");
+                });
+
+            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.ServerVM", b =>
+                {
+                    b.HasOne("Projekt_Koncowy_GUI.Models.Server", "Server")
+                        .WithOne("ServerVM")
+                        .HasForeignKey("Projekt_Koncowy_GUI.Models.ServerVM", "ServerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.Storage", b =>
+                {
+                    b.HasOne("Projekt_Koncowy_GUI.Models.Server", "Server")
+                        .WithOne("Storage")
+                        .HasForeignKey("Projekt_Koncowy_GUI.Models.Storage", "ServerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.StorageProcess", b =>
+                {
+                    b.HasOne("Projekt_Koncowy_GUI.Models.EndpointDevice", "EndpointDevice")
+                        .WithMany("StorageProcesses")
+                        .HasForeignKey("EndpointDeviceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Projekt_Koncowy_GUI.Models.Warehouse", "Warehouse")
+                        .WithMany()
+                        .HasForeignKey("WarehouseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.SupportedSattelites", b =>
+                {
+                    b.HasOne("Projekt_Koncowy_GUI.Models.GPSModule", "GPSModules")
+                        .WithMany("SupportedSatellites")
+                        .HasForeignKey("GPSModuleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.User", b =>
+                {
+                    b.HasOne("Projekt_Koncowy_GUI.Models.License", "License")
+                        .WithMany("Users")
+                        .HasForeignKey("LicenseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.UserAdministrator", b =>
+                {
+                    b.HasOne("Projekt_Koncowy_GUI.Models.User", "User")
+                        .WithOne("UsersAdministrator")
+                        .HasForeignKey("Projekt_Koncowy_GUI.Models.UserAdministrator", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Projekt_Koncowy_GUI.Models.UserNormal", b =>
+                {
+                    b.HasOne("Projekt_Koncowy_GUI.Models.User", "User")
+                        .WithOne("UserNormal")
+                        .HasForeignKey("Projekt_Koncowy_GUI.Models.UserNormal", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

@@ -15,6 +15,10 @@
     <Compile Remove="Migrations\20200609103213_fixMigrations.Designer.cs" />
     <Compile Remove="Migrations\20200609103423_FixingMigration.cs" />
     <Compile Remove="Migrations\20200609103423_FixingMigration.Designer.cs" />
+    <Compile Remove="Migrations\20200619081944_StorageProcess.cs" />
+    <Compile Remove="Migrations\20200619081944_StorageProcess.Designer.cs" />
+    <Compile Remove="Migrations\20200619082032_StorageProcess.cs" />
+    <Compile Remove="Migrations\20200619082032_StorageProcess.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,10 +34,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.3" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Projekt_Koncowy_CL\Projekt_Koncowy_CL.csproj" />
   </ItemGroup>
 
 

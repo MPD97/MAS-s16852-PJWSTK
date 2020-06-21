@@ -10,8 +10,6 @@ namespace MP02_ConsoleApp
 
         static void Main(string[] args)
         {
-
-
             #region Inicjalizacja Strumienia Wyjścia Na Konsole
             var sw = new StreamWriter(Console.OpenStandardOutput());
             sw.AutoFlush = true;
