@@ -10,26 +10,24 @@ namespace Projekt_Koncowy_GUI.Models
     {
 
         public int Identifier { get; set; }
-
         public DateTime DateOfProduction { get; set; }
-
         public string Model { get; set; }
-
 
         public Tested Tested { get; set; }
         public TestResult TestResult { get; set; }
         public Gauge Gauge { get; set; }
 
-        public virtual ICollection<Equipment> Equipments { get; set; }
-
-
+        public ICollection<Equipment> Equipments { get; set; }
         public ICollection<CommunicationModule> CommunicationModules { get; set; }
         public ICollection<EndpointDeviceAddOnModule> EndpointDeviceAddOnModules { get; set; }
         public ICollection<StorageProcess> StorageProcesses { get; set; }
         public ICollection<License> Licenses { get; set; }
 
-        public int? OperatingSystemId { get; set; }
+        public int? OperatingSystemId { get; set; } 
         public OperatingSystem OperatingSystem { get; set; }
+
+
+
 
 
         public void PerformAction(Action action)

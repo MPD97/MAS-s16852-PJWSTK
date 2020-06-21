@@ -51,22 +51,22 @@ namespace Projekt_Koncowy_GUI.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<EndpointDevice>()
               .HasKey(ed => new { ed.Identifier });
+            modelBuilder.Entity<CommunicationModule>()
+              .HasKey(c => new { c.IMEI });
 
+            modelBuilder.Entity<CommunicationModule>()
+              .HasIndex(c => c.IMEI)
+              .IsUnique();
 
+            #region Uniqe
             modelBuilder.Entity<Component>()
               .HasKey(comp => new { comp.Identifier });
+            #endregion
 
-            modelBuilder.Entity<CommunicationModule>()
-             .HasKey(c => new { c.IMEI });
-
-            modelBuilder.Entity<CommunicationModule>()
-                .HasIndex(c => c.IMEI)
-                .IsUnique();
-
+            #region Overlapping
             modelBuilder.Entity<Employee>()
                 .HasOne(e => e.EmployeeServicemen)
                 .WithOne(a => a.Employee)
@@ -76,26 +76,35 @@ namespace Projekt_Koncowy_GUI.Models
                 .HasOne(e => e.EmployeeStorekeeper)
                 .WithOne(a => a.Employee)
                 .OnDelete(DeleteBehavior.Cascade);
+            #endregion
 
+            #region Dynamic
             modelBuilder.Entity<User>()
-                 .HasMany(e => e.UsersAdministrators)
+                 .HasOne(e => e.UserNormal)
                  .WithOne(a => a.User)
                  .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<User>()
-                .HasMany(e => e.UserNormals)
+                .HasOne(e => e.UsersAdministrator)
                 .WithOne(a => a.User)
                 .OnDelete(DeleteBehavior.Cascade);
+            #endregion
 
+            #region Kompozycja
             modelBuilder.Entity<Server>()
                 .HasOne(e => e.ServerVM)
                 .WithOne(a => a.Server)
                 .OnDelete(DeleteBehavior.Cascade);
+            #endregion
 
+            #region Atrybut złożony
             modelBuilder.Entity<Server>()
                .HasOne(e => e.Storage)
                .WithOne(a => a.Server)
                .OnDelete(DeleteBehavior.Cascade);
+            #endregion
+
+
 
 
             modelBuilder.Entity<CommunicationModule>().HasData(new CommunicationModule
@@ -154,18 +163,18 @@ namespace Projekt_Koncowy_GUI.Models
 
             modelBuilder.Entity<Replacement>().HasData(new Replacement
             {
-               ReplacementId = "REPLACEMENT-ABC123",
-               ReplacedById = "AAA-BBB-123",
-               BaseId = "MMM-005-550"
+                ReplacementId = "REPLACEMENT-ABC123",
+                ReplacedById = "AAA-BBB-123",
+                BaseId = "MMM-005-550"
             });
 
 
             modelBuilder.Entity<Equipment>().HasData(new Equipment
             {
-               EquipmentId = 1,
-               EndpointDeviceId = 10,
-               ComponentId = "356-RRR-QAZ",
-               Amount = 5,
+                EquipmentId = 1,
+                EndpointDeviceId = 10,
+                ComponentId = "356-RRR-QAZ",
+                Amount = 5,
             });
 
             modelBuilder.Entity<Equipment>().HasData(new Equipment
@@ -190,7 +199,8 @@ namespace Projekt_Koncowy_GUI.Models
                 ComponentId = "AAA-BBB-123",
                 Amount = 6,
             });
-            
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

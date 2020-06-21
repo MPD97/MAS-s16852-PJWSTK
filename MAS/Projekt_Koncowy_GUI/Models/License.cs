@@ -13,9 +13,12 @@ namespace Projekt_Koncowy_GUI.Models
         public DateTime BuyDate { get; set; }
         public decimal Price { get; set; }
 
-        public FullLicense FullLicense { get; set; }
+        public ICollection<FullLicense> FullLicenses { get; set; }
 
-        public PartialLicense PartialLicense { get; set; }
+        public ICollection<PartialLicense> PartialLicenses { get; set; }
+
+        public int EndpointDeviceId { get; set; }
+        public EndpointDevice EndpointDevice { get; set; }
 
         public ICollection<User> Users { get; set; }
         public ICollection<Client> Clients { get; set; }

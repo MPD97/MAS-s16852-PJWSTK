@@ -12,8 +12,8 @@ namespace Projekt_Koncowy_GUI.Models
         public int LicenseId { get; set; }
         public License License { get; set; }
 
-        public ICollection<UserAdministrator> UsersAdministrators { get; set; }
-        public ICollection<UserNormal> UserNormals { get; set; }
+        public UserAdministrator UsersAdministrator { get; set; }
+        public UserNormal UserNormal { get; set; }
 
     }
     public class UserAdministrator

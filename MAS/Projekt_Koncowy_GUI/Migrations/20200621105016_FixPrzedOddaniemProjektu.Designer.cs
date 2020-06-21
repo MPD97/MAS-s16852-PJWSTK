@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Projekt_Koncowy_GUI.Models;
 
 namespace Projekt_Koncowy_GUI.Migrations
 {
     [DbContext(typeof(LocalContext))]
-    partial class LocalContextModelSnapshot : ModelSnapshot
+    [Migration("20200621105016_FixPrzedOddaniemProjektu")]
+    partial class FixPrzedOddaniemProjektu
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -248,7 +250,7 @@ namespace Projekt_Koncowy_GUI.Migrations
                         new
                         {
                             Identifier = 10,
-                            DateOfProduction = new DateTime(2020, 3, 23, 12, 59, 16, 241, DateTimeKind.Local).AddTicks(4246),
+                            DateOfProduction = new DateTime(2020, 3, 23, 12, 50, 16, 65, DateTimeKind.Local).AddTicks(5682),
                             Gauge = 2,
                             Model = "Speed 500w",
                             TestResult = 0,
@@ -257,7 +259,7 @@ namespace Projekt_Koncowy_GUI.Migrations
                         new
                         {
                             Identifier = 15,
-                            DateOfProduction = new DateTime(2020, 4, 22, 12, 59, 16, 245, DateTimeKind.Local).AddTicks(9201),
+                            DateOfProduction = new DateTime(2020, 4, 22, 12, 50, 16, 70, DateTimeKind.Local).AddTicks(995),
                             Gauge = 2,
                             Model = "Ride Fast 200W",
                             TestResult = 0,
@@ -669,13 +671,14 @@ namespace Projekt_Koncowy_GUI.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("UserAdministratorId");
 
                     b.HasIndex("UserId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[UserId] IS NOT NULL");
 
                     b.ToTable("UserAdministrators");
                 });
@@ -687,13 +690,14 @@ namespace Projekt_Koncowy_GUI.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("UserNormalId");
 
                     b.HasIndex("UserId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[UserId] IS NOT NULL");
 
                     b.ToTable("UserNormals");
                 });
@@ -930,8 +934,7 @@ namespace Projekt_Koncowy_GUI.Migrations
                     b.HasOne("Projekt_Koncowy_GUI.Models.User", "User")
                         .WithOne("UsersAdministrator")
                         .HasForeignKey("Projekt_Koncowy_GUI.Models.UserAdministrator", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Projekt_Koncowy_GUI.Models.UserNormal", b =>
@@ -939,8 +942,7 @@ namespace Projekt_Koncowy_GUI.Migrations
                     b.HasOne("Projekt_Koncowy_GUI.Models.User", "User")
                         .WithOne("UserNormal")
                         .HasForeignKey("Projekt_Koncowy_GUI.Models.UserNormal", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }
