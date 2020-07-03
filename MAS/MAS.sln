@@ -26,6 +26,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Projekt_Koncowy_GUI", "Proj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZPR-7", "ZPR-7\ZPR-7.csproj", "{2FD07723-1D90-43C5-9DE9-40CCA35D2446}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZPR-7-CL", "ZPR-7-CL\ZPR-7-CL.csproj", "{B1845345-0CD0-423B-B5A6-92D2694DAE60}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -68,6 +70,10 @@ Global
 		{2FD07723-1D90-43C5-9DE9-40CCA35D2446}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2FD07723-1D90-43C5-9DE9-40CCA35D2446}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2FD07723-1D90-43C5-9DE9-40CCA35D2446}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1845345-0CD0-423B-B5A6-92D2694DAE60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1845345-0CD0-423B-B5A6-92D2694DAE60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1845345-0CD0-423B-B5A6-92D2694DAE60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1845345-0CD0-423B-B5A6-92D2694DAE60}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
