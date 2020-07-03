@@ -1,13 +1,19 @@
-﻿using System;
+﻿using MP03.Functional;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace ZPR_7
 {
-    public class Przepis
+    public class Przepis : ObjectPlusPlus
     {
         public string Tytuł { get; set; }
         public string KrótkiOpis { get; set; }
+
+        public Przepis() : base()
+        {
+
+        }
 
         public static void UsuńPrzepis()
         {
